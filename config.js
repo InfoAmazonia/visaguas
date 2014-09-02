@@ -3,18 +3,13 @@ module.exports = {
 	data: [
 		{
 			type: 'condition',
-			name: 'saneamento',
+			name: 'abastecimento_rede_geral',
 			file:'censo_proporcao_dpp_rede_geral_2010.csv'
 		},
 		{
 			type: 'impact',
-			name: 'saa',
-			file: 'percentual_saa_sem_tratamento_2010.csv'
-		},
-		{
-			type: 'impact',
-			name: 'sac',
-			file: 'percentual_sac_2010.csv'
+			name: 'abastecimento_outras_formas',
+			file:'censo_proporcao_dpp_outras_formas_2010.csv'
 		},
 		{
 			type: 'result',

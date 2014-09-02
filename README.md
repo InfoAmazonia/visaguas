@@ -12,10 +12,9 @@ Censo (**IBGE**)
 
 ## Impacto
 
-SISAGUA - Sistema de informação de Vigilância da Qualidade da Água para consumo humano (**Ministério da Saúde**)
+Censo (**IBGE**)
 
- - Percentual da população abastecida por Sistema de Abastecimento de Água - SAA sem tratamento (para o ano 2010)
- - Percentual da População abastecida por Solução Alternativa Coletiva - SAC sem tratamento (para o ano 2010)
+ - Proporção de DPP com outras formas de abastecimento de água (para o ano 2010)
 
 ## Consequência
 
