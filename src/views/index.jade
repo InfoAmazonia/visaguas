@@ -3,13 +3,17 @@ html(lang='pt-BR')
 	include includes/head
 	body
 		header#masthead
-			video(src="http://infoamazonia.org/visaguas/video.mp4" autoplay loop muted)
+			video(src="http://infoamazonia.org/visaguas/video_01.mp4" autoplay loop muted)
+			p.video-credits
+				a(href="https://www.flickr.com/photos/cifor/5963328548" target="_blank") Vídeo: Daniel Cooney/CIFOR
 			.header-content
+				h2.ia
+					a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia
 				.container
 					.twelve.columns
 						h1
 							a(href="/") Visaguas
-						h2 Uma análise sobre dados de saneamento, qualidade e suas consequências em municípios brasileiros
+						h2.tagline Uma análise sobre dados de saneamento, qualidade e suas consequências em municípios brasileiros
 
 		section#content(ui-view, autoscroll='false')
 
