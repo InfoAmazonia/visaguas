@@ -1,4 +1,4 @@
-# Visagua
+# VISAGUAS
 
 Uma análise sobre dados de saneamento, qualidade e suas consequências em municípios brasileiros
 

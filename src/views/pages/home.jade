@@ -1,0 +1,23 @@
+section#home.main-section
+	.container
+		.four.columns
+			h2 Proporção de DPP com poço ou nascente como forma de abastecimento de água (2010)
+			ul(ng-controller="CityController")
+				li(ng-repeat="item in items[0].data" ng-click="accessCity(item)")
+					h3
+						a(href="javascript:void(0);") {{item.city}}
+					p {{item.value}}
+		.four.columns
+			h2 Percentual da população abastecida por Sistema de Abastecimento de Água - SAA sem tratamento (2010)
+			ul(ng-controller="CityController")
+				li(ng-repeat="item in items[1].data" ng-click="accessCity(item)")
+					h3
+						a(href="javascript:void(0);") {{item.city}}
+					p {{item.value}}
+		.four.columns
+			h2 Percentual da População abastecida por Solução Alternativa Coletiva - SAC sem tratamento (2010)
+			ul(ng-controller="CityController")
+				li(ng-repeat="item in items[2].data" ng-click="accessCity(item)")
+					h3
+						a(href="javascript:void(0);") {{item.city}}
+					p {{item.value}}

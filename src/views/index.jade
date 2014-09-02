@@ -1,0 +1,24 @@
+doctype html
+html(lang='pt-BR')
+	include includes/head
+	body
+		header#masthead
+			video(src="/video.mp4" autoplay loop muted)
+			.header-content
+				.container
+					.twelve.columns
+						h1
+							a(href="/") Visaguas
+						h2 Uma análise sobre dados de saneamento, qualidade e suas consequências em municípios brasileiros
+
+		section#content(ui-view, autoscroll='false')
+
+		.clear
+
+		footer#mastfoot
+
+		//
+			#loading(loading-status-message='loading-status-message', ng-class='{active: loads.length}')
+			.loading-message
+
+		include includes/foot
