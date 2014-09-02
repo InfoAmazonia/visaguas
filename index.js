@@ -77,7 +77,7 @@ if(config.data.length) {
 					city: i['NOME_MUN2'],
 					year: parseInt(i['NU_ANO7']),
 					ibgeCode: parseInt(i['CO_IBGE3']),
-					value: parseInt(i['VALOR8'])
+					value: parseFloat(i['VALOR8'])
 				}, d));
 			});
 			if(err) callback(err);
