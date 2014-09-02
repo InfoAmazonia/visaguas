@@ -92,7 +92,7 @@ if(config.data.length) {
 			console.log(err);
 		} else {
 			console.log('Total items: ' + data.length);
-			data = _.sortBy(data, function(i) { return i['NOME_MUN2']; });
+			data = _.sortBy(data, function(i) { return i['city']; });
 			serve();
 		}
 	});

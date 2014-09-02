@@ -53,12 +53,6 @@ module.exports = function(grunt) {
 						src: ['**', '!app/**', '!**/*.less', '!**/*.jade', '!**/*.js'],
 						dest: 'dist',
 						expand: true
-					},
-					{
-						cwd: 'node_modules/bigvideo/css',
-						src: '**',
-						dest: 'dist/css',
-						expand: true
 					}
 				]
 			}
