@@ -8,7 +8,7 @@ Uma análise sobre dados de saneamento, qualidade e suas consequências em munic
 
 Censo (**IBGE**)
 
- - Proporção de DPP com poço ou nascente como forma de abastecimento de água (para o ano 2010)
+ - Proporção de DPP com rede geral como forma de abastecimento de água (para o ano 2010)
 
 ## Impacto
 

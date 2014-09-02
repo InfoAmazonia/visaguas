@@ -25,7 +25,7 @@ angular.module('visaguas', [
 						function($q, Data) {
 							var promises = [];
 							var queries = [
-								{name: 'saneamento'},
+								{name: 'saneamento', order: 'DESC'},
 								{name: 'sac'},
 								{name: 'saa'}
 							];

@@ -4,7 +4,7 @@ module.exports = {
 		{
 			type: 'condition',
 			name: 'saneamento',
-			file:'censo_proporcao_dpp_poco_nascente_2010.csv'
+			file:'censo_proporcao_dpp_rede_geral_2010.csv'
 		},
 		{
 			type: 'impact',
