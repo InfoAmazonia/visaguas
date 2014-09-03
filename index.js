@@ -7,53 +7,21 @@ var fs = require('fs'),
 	config = require('./config');
 
 var app = express();
+
 app.use(require('compression')());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/dist'));
 
-app.get('/api', function(req, res) {
-
-	var limit = parseInt(req.query.limit) || 20;
-	var page = parseInt(req.query.page) || 1;
-
-	var results = {
-		data: data.slice(0)
-	};
-
-	if(req.query) {
-		for(var key in req.query) {
-			results.data = _.filter(results.data, function(i) {
-				if(!i[key])
-					return true;
-				return i[key] == req.query[key];
-			});
-		}
-		if(req.query.name) {
-			results.data = _.sortBy(results.data, function(i) {
-				if(req.query.order == 'DESC')
-					return i['value'];
-				else
-					return -i['value'];
-				return 0;
-			});
-		}
-	}
-
-	results.total = results.data.length;
-
-	if(page*limit > results.total && page !== 1)
-		res.send([]);
-	else
-		results.data = results.data.slice(((page-1)*limit), ((page-1)*limit) + limit);
-		res.send(results);
-});
+require('./api')(app);
 
 app.get('/*', function(req, res) {
 	res.sendfile('dist/views/index.html');
 });
 
 function serve() {
+	app.set('data', data);
+	app.set('cities', data);
 	var port = process.env.PORT || 8000;
 	app.listen(port);
 	console.log('App started on port ' + port);
@@ -63,6 +31,7 @@ function serve() {
  * Prepare data
  */
 
+var cities = [];
 var data = [];
 
 if(config.data.length) {
@@ -71,19 +40,34 @@ if(config.data.length) {
 		var path = config.dataDir + item.file;
 		var d = { type: item.type, name: item.name };
 		csv.parse(fs.readFileSync(path), {columns: true}, function(err, output) {
-			var parsed = [];
-			_.each(output, function(i) {
-				parsed.push(_.extend({
-					city: i['NOME_MUN2'],
-					year: parseInt(i['NU_ANO7']),
-					ibgeCode: parseInt(i['CO_IBGE3']),
-					value: parseFloat(i['VALOR8'])
-				}, d));
-			});
 			if(err) callback(err);
 			else {
+				var parsed = [];
+				if(item.name == 'municipios_amazonia_legal') {
+					_.each(output, function(i) {
+						parsed.push(_.extend({
+							cidade: i['Nome do Município'],
+							uf: i['Nome da Unidade da Federação'],
+							ibge: parseInt(i['Código do Município'].slice(0, i['Código do Município'].length-1))
+						}, d));
+					});
+					cities = cities.concat(parsed);
+				} else {
+					_.each(output, function(i) {
+						var city = _.find(cities, function(c) { return c.name == 'municipios_amazonia_legal' && c.ibge == parseInt(i['CO_IBGE3']); });
+						if(city) {
+							parsed.push(_.extend({
+								cidade: i['NOME_MUN2'],
+								uf: city.uf,
+								ano: parseInt(i['NU_ANO7']),
+								ibge: parseInt(i['CO_IBGE3']),
+								valor: parseFloat(i['VALOR8'])
+							}, d));
+						}
+					});
+					data = data.concat(parsed);
+				}
 				console.log('Processed: ' + item.name);
-				data = data.concat(parsed);
 				callback();
 			}
 		});
@@ -92,7 +76,7 @@ if(config.data.length) {
 			console.log(err);
 		} else {
 			console.log('Total items: ' + data.length);
-			data = _.sortBy(data, function(i) { return i['city']; });
+			data = _.sortBy(data, function(i) { return i['cidade']; });
 			serve();
 		}
 	});

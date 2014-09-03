@@ -1,16 +1,42 @@
-section#home.main-section
-	.container
-		.six.columns
-			h2 Proporção de DPP com rede geral como forma de abastecimento de água (2010)
-			ul(ng-controller="CityController")
-				li(ng-repeat="item in items[0].data" ng-click="accessCity(item)")
-					h3
-						a(href="javascript:void(0);") {{item.city}}
-					p {{item.value}}
-		.six.columns
-			h2 Proporção de DPP com outras formas de abastecimento de água (2010)
-			ul(ng-controller="CityController")
-				li(ng-repeat="item in items[1].data" ng-click="accessCity(item)")
-					h3
-						a(href="javascript:void(0);") {{item.city}}
-					p {{item.value}}
+section#home
+	.row
+		.container
+			.twelve.columns
+				h2.section-title Situação
+
+				p Dentro dos {{redeGeral.data[0].count}} municípios da Amazônia Legal, {{redeGeral.data[0].average}}% das residências possuem abastecimento de água pela rede geral.
+
+			.four.columns(ng-repeat="estado in estados.redeGeral.data")
+				h3 {{estado.uf}}
+				p {{estado.count}} municípios
+				p {{estado.average}}%
+
+			.twelve.columns
+
+				h2.section-title Impacto
+
+				p {{outros.data[0].average}}% das residências possuem abastecimento de água de outras formas.
+
+			.four.columns(ng-repeat="estado in estados.outros.data")
+				h3 {{estado.uf}}
+				p {{estado.count}} municípios
+				p {{estado.average}}%
+
+	.row
+		.container
+			.six.columns
+				h2 Proporção de DPP com rede geral como forma de abastecimento de água (2010)
+				ul(ng-controller="CityController")
+					li(ng-repeat="item in items[4].data" ng-click="accessCity(item)")
+						h3
+							a(href="javascript:void(0);") {{item.cidade}}
+						p {{item.uf}}
+						p {{item.valor}}%
+			.six.columns
+				h2 Proporção de DPP com outras formas de abastecimento de água (2010)
+				ul(ng-controller="CityController")
+					li(ng-repeat="item in items[5].data" ng-click="accessCity(item)")
+						h3
+							a(href="javascript:void(0);") {{item.cidade}}
+						p {{item.uf}}
+						p {{item.valor}}%

@@ -25,6 +25,10 @@ angular.module('visaguas', [
 						function($q, Data) {
 							var promises = [];
 							var queries = [
+								{name: 'abastecimento_rede_geral', average: true},
+								{name: 'abastecimento_rede_geral', average: 'uf'},
+								{name: 'abastecimento_outras_formas', average: true},
+								{name: 'abastecimento_outras_formas', average: 'uf'},
 								{name: 'abastecimento_rede_geral', order: 'DESC'},
 								{name: 'abastecimento_outras_formas'}
 							];
@@ -37,7 +41,7 @@ angular.module('visaguas', [
 				}
 			})
 			.state('city', {
-				url: '/cidades/:ibgeCode/',
+				url: '/cidades/:ibge/',
 				controller: 'SingleCityController',
 				templateUrl: '/views/city/index.html',
 				resolve: {
@@ -45,7 +49,7 @@ angular.module('visaguas', [
 						'$stateParams',
 						'DataService',
 						function($stateParams, Data) {
-							return Data.query({ibgeCode: $stateParams.ibgeCode});
+							return Data.query({ibge: $stateParams.ibge});
 						}
 					]
 				}
@@ -117,7 +121,16 @@ angular.module('visaguas', [
 	'HomeData',
 	'$scope',
 	function(data, $scope) {
+
 		$scope.items = data;
+
+		$scope.redeGeral = data[0];
+		$scope.outros = data[2];
+
+		$scope.estados = {
+			redeGeral: data[1],
+			outros: data[3]
+		};
 	}
 ])
 
@@ -127,7 +140,7 @@ angular.module('visaguas', [
 	function($state, $scope) {
 
 		$scope.accessCity = function(data) {
-			$state.go('city', {ibgeCode: data.ibgeCode});
+			$state.go('city', {ibge: data.ibge});
 		}
 
 	}
@@ -137,10 +150,12 @@ angular.module('visaguas', [
 	'CityData',
 	'$scope',
 	function(data, $scope) {
-		$scope.city = data.data[0].city;
+		$scope.cidade = data.data[0].cidade;
 		$scope.data = {};
 		angular.forEach(data.data, function(item) {
-			$scope.data[item.name] = item.value;
+			if(item.valor != undefined) {
+				$scope.data[item.name] = item.valor;
+			}
 		});
 	}
 ]);
