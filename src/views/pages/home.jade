@@ -1,26 +1,38 @@
 section#home
 	.row
-		.container
-			.twelve.columns
-				h2.section-title Situação
+		.home-data-section
+			.container
+				.twelve.columns
+					h2.section-title.row Situação
 
-				p Dentro dos {{redeGeral.data[0].count}} municípios da Amazônia Legal, {{redeGeral.data[0].average}}% das residências possuem abastecimento de água pela rede geral.
+				.eight.columns
+					ul.uf-list.clearfix
+						li.uf-item(ng-repeat="estado in estados.redeGeral.data")
+							h3 {{estado.uf}}
+							p {{estado.count}} municípios
+							p {{estado.average}}%
 
-			.four.columns(ng-repeat="estado in estados.redeGeral.data")
-				h3 {{estado.uf}}
-				p {{estado.count}} municípios
-				p {{estado.average}}%
+				.four.columns
+					.summary
+						p
+							span.big-stats {{redeGeral.data[0].average}}% 
+							| das residências na 
+							strong Amazônia Legal 
+							| possuem abastecimento de água pela rede geral.
 
-			.twelve.columns
+	.row
+		.home-data-section
+			.container
+				.twelve.columns
 
-				h2.section-title Impacto
+					h2.section-title Impacto
 
-				p {{outros.data[0].average}}% das residências possuem abastecimento de água de outras formas.
+					p {{outros.data[0].average}}% das residências possuem abastecimento de água de outras formas.
 
-			.four.columns(ng-repeat="estado in estados.outros.data")
-				h3 {{estado.uf}}
-				p {{estado.count}} municípios
-				p {{estado.average}}%
+				.four.columns(ng-repeat="estado in estados.outros.data")
+					h3 {{estado.uf}}
+					p {{estado.count}} municípios
+					p {{estado.average}}%
 
 	.row
 		.container

@@ -81,13 +81,12 @@ h5 {
 		bottom: 0;
 		background: rgba(0,0,0,0.5) url(../img/dots.png);
 	}
-	.header-content {
-		position: relative;
-		z-index: 2;
-	}
 	h2.ia {
+		position: absolute;
+		top: 5%;
+		left: 0;
+		right: 0;
 		font-weight: 700;
-		padding: 5% 0;
 		text-align: center;
 		color: #fff;
 		text-transform: uppercase;
@@ -106,13 +105,16 @@ h5 {
 		}
 	}
 	h1 {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		margin-top: -62px;
 		text-align: center;
 		color: #fff;
 		text-transform: uppercase;
-		padding: 0;
-		margin: 0 0 5%;
 		line-height: 120px;
-		.transition(all .2s ease-in-out);
+		.transition(font-size .2s ease-in-out);
 		a {
 			display: inline-block;
 			color: inherit;
@@ -138,9 +140,12 @@ h5 {
 	h2.tagline {
 		width: 50%;
 		max-width: 580px;
-		font-size: 32px;
+		position: absolute;
+		bottom: 10%;
+		left: 0;
+		right: 0;
 		margin: 0 auto;
-		padding: 0 0 10%;
+		font-size: 32px;
 		color: #fff;
 		text-align: center;
 	}
@@ -157,6 +162,7 @@ h5 {
 	color: #666;
 	padding: 80px 0;
 	font-size: 18px;
+	line-height: 150%;
 	a {
 		color: #333;
 	}
@@ -166,5 +172,40 @@ h5 {
 	h4,
 	h5 {
 		color: #333;
+	}
+}
+
+.section-title {
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 27px;
+	color: #999;
+	border-bottom: 1px dotted #999;
+}
+
+.home-data-section {
+	.uf-list {
+		.uf-item {
+			.box-sizing(border-box);
+			width: 33.333%;
+			float: left;
+			padding-right: 40px;
+		}
+	}
+	.summary {
+		line-height: 150%;
+		font-size: 24px;
+		margin-top: -80px;
+		.big-stats {
+			font-family: "Open Sans Condensed";
+			font-weight: 200;
+			display: block;
+			margin: 0 auto 20px;
+			text-align: center;
+			font-size: 80px;
+			line-height: 180px;
+			background: #31cd73 url(../img/dots.png);
+			color: rgba(0,0,0,0.7);
+		}
 	}
 }

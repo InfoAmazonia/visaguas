@@ -13,8 +13,13 @@ module.exports = {
 		},
 		{
 			type: 'impact',
+			name: 'abastecimento_poco_nascente',
+			file: 'censo_proporcao_dpp_poco_nascente_2010.csv'
+		},
+		{
+			type: 'impact',
 			name: 'abastecimento_outras_formas',
-			file:'censo_proporcao_dpp_outras_formas_2010.csv'
+			file: 'censo_proporcao_dpp_outras_formas_2010.csv'
 		},
 		{
 			type: 'result_internacao',
