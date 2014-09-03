@@ -85,6 +85,23 @@ angular.module('visaguas', [
 	}
 ])
 
+.run([
+	'$rootScope',
+	function($rootScope) {
+
+		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState) {
+
+			if(fromState.name && toState.url !== '/') {
+				$('html,body').animate({
+					scrollTop: $(window).height() - 60
+				}, 500);
+			}
+
+		});
+
+	}
+])
+
 .factory('DataService', [
 	'$http',
 	'$q',
