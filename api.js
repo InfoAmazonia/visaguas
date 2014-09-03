@@ -79,4 +79,41 @@ module.exports = function(app) {
 
 	});
 
+	app.get('/api/all', function(req, res) {
+
+		var data = app.get('data');
+		var cities = app.get('cities');
+
+		var result = _.map(cities, function(city) { return {cidade: city.cidade, ibge: city.ibge}; });
+
+		_.each(data, function(i) {
+			var city = _.find(result, function(c) { return c.ibge == i.ibge; });
+			if(city) {
+				city[i.name] = i.valor;
+			} else {
+				console.log('city not found');
+			}
+		});
+
+		var internacao = [
+			'amebiase',
+			'colera',
+			'dengue',
+			'esquistossomose',
+			'filariose',
+			'leptospirose',
+			'tifoide',
+			'diarreia'
+		];
+
+		_.each(result, function(i) {
+
+			i['totalInternacao'] = internacao.reduce(function(a, b) { return a + i[b]; }, 0).toFixed(2);
+
+		});
+
+		res.send(result);
+
+	});
+
 };

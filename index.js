@@ -21,7 +21,7 @@ app.get('/*', function(req, res) {
 
 function serve() {
 	app.set('data', data);
-	app.set('cities', data);
+	app.set('cities', cities);
 	var port = process.env.PORT || 8000;
 	app.listen(port);
 	console.log('App started on port ' + port);

@@ -30,19 +30,10 @@ h5 {
 		.video-credits {
 			display: none;
 		}
-		h1 {
-			margin: 0;
-			padding: 0;
-			line-height: 60px;
-			font-size: 26px;
-			a {
-				padding: 0 60px;
-				border-top: 0;
-				border-bottom: 0;
-				border-color: rgba(255,255,255,0.3);
-				&:hover {
-					border-color: #fff;
-				}
+		h1 a {
+			border-color: rgba(255,255,255,0.3);
+			&:hover {
+				border-color: #fff;
 			}
 		}
 		h2,
@@ -120,12 +111,28 @@ h5 {
 		text-transform: uppercase;
 		padding: 0;
 		margin: 0 0 5%;
+		line-height: 120px;
+		.transition(all .2s ease-in-out);
 		a {
 			display: inline-block;
 			color: inherit;
 			text-decoration: none;
 			border: 2px solid #fff;
-			padding: 20px 40px;
+			padding: 0;
+			width: 230px;
+			.transition(border-color .2s ease-in-out);
+		}
+		&.fixed {
+			position:fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			margin: 0;
+			line-height: 60px;
+			font-size: 26px;
+			a {
+				border-top: 0;
+			}
 		}
 	}
 	h2.tagline {
@@ -136,6 +143,11 @@ h5 {
 		padding: 0 0 10%;
 		color: #fff;
 		text-align: center;
+	}
+	&.title-fixed {
+		h2.tagline {
+			display: none;
+		}
 	}
 }
 
