@@ -34,7 +34,7 @@ Sistema de Informações sobre Mortalidade (**SUS**)
 
 ## Pré-requisitos
 
- - node 1.4.x
+ - npm 1.4.x
  - node 0.10.x
 
 ## Instalação
