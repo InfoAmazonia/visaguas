@@ -91,11 +91,13 @@ angular.module('visaguas', [
 
 		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState) {
 
-			if(fromState.name && toState.url !== '/') {
-				$('html,body').animate({
-					scrollTop: $(window).height() - 60
-				}, 500);
-			}
+			setTimeout(function() {
+				if($(window).scrollTop() > $(window).height()-60 || !(!fromState.name && toState.url == '/')) {
+					$('html,body').animate({
+						scrollTop: $(window).height() - 60
+					}, 500);
+				}
+			}, 200);
 
 		});
 
@@ -204,7 +206,7 @@ $(document).ready(function() {
 		}
 
 		if(scrollTop >= windowHeight - 60) {
-			$html.css({'padding-top': $(window).height()});
+			$html.css({'padding-top': windowHeight});
 			$masthead.addClass('fixed');
 		} else {
 			$html.css({'padding-top': '0'});
