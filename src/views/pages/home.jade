@@ -1,19 +1,25 @@
 section#home
 	.row
 		.home-data-section
-			.container
-				.twelve.columns
-					h2.section-title.row Situação
+			.section-title.row
+				.container
+					.twelve.columns
+						h2 Situação
+						p O abastecimento de água pela rede geral
 
+			.container
 				.eight.columns
 					ul.uf-list.clearfix
-						li.uf-item(ng-repeat="estado in estados.redeGeral.data")
-							h3 {{estado.uf}}
-							p {{estado.count}} municípios
-							p {{estado.average}}%
+						li.uf-item.clearfix(ng-repeat="estado in estados.redeGeral.data")
+							.data-rep(style="width:{{estado.average}}%")
+							.data.info
+								p.percentage {{estado.average}}%
+								h3 {{estado.uf}}
+								p.cities {{estado.count}} municípios
 
 				.four.columns
 					.summary
+						.data-rep(style="top:{{100-redeGeral.data[0].average}}%")
 						p
 							span.big-stats {{redeGeral.data[0].average}}% 
 							| das residências na 
@@ -22,17 +28,28 @@ section#home
 
 	.row
 		.home-data-section
+			.section-title.row
+				.container
+					.twelve.columns
+						h2 Impacto
+						p O abastecimento de água por outras formas
+
 			.container
-				.twelve.columns
+				.eight.columns
+					ul.uf-list.clearfix
+						li.uf-item(ng-repeat="estado in estados.outros.data")
+							p.percentage {{estado.average}}%
+							h3 {{estado.uf}}
+							p.cities {{estado.count}} municípios
 
-					h2.section-title Impacto
-
-					p {{outros.data[0].average}}% das residências possuem abastecimento de água de outras formas.
-
-				.four.columns(ng-repeat="estado in estados.outros.data")
-					h3 {{estado.uf}}
-					p {{estado.count}} municípios
-					p {{estado.average}}%
+				.four.columns
+					.summary
+						.data-rep(style="top:{{100-outros.data[0].average}}%")
+						p
+							span.big-stats {{outros.data[0].average}}% 
+							| das residências na 
+							strong Amazônia Legal 
+							| possuem abastecimento de água por outras formas.
 
 	.row
 		.container
