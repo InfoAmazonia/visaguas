@@ -51,6 +51,51 @@ module.exports = function(app) {
 		}
 	]);
 
+	app.directive('map', [
+		function() {
+			return {
+				restrict: 'E',
+				link: function(scope, element, attrs) {
+					var map = L.map(element[0], {center: [-2,-2], zoom: 4});
+
+					var column = 'agua_rede_';
+
+					var sql = new cartodb.SQL({user: 'infoamazonia'});
+
+					var quantiles;
+					var cartocss = [
+						'#merge_fiocruz { polygon-fill: #ffcc00; polygon-opacity: 0; }',
+						'#merge_fiocruz[ data <= 0 ] { polygon-opacity: 0; }'
+					];
+
+					sql
+						.execute('SELECT CDB_QuantileBins(array_agg(cast(merge_fiocruz.' + column + ' as numeric)), 7) FROM merge_fiocruz WHERE ' + column + ' IS NOT null')
+						.done(function(data) {
+
+							quantiles = data.rows[0].cdb_quantilebins;
+
+							_.each(quantiles, function(qt, i) {
+								cartocss.push('#merge_fiocruz[ data <= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; }');
+							});
+
+							cartodb.createLayer(map, {
+								user_name: 'infoamazonia',
+								type: 'cartodb',
+								sublayers: [{
+									sql: 'SELECT ' + column + ' as data, * FROM merge_fiocruz WHERE estado_id IS NOT NULL',
+									cartocss: cartocss.join(' ')
+								}]
+							})
+							.addTo(map);
+
+						});
+
+					//cartodb.createVis(element[0], 'http://infoamazonia.cartodb.com/api/v2/viz/113859a0-3538-11e4-98be-0edbca4b5057/viz.json');
+				}
+			}
+		}
+	]);
+
 	app.directive('barItem', [
 		function() {
 			return {

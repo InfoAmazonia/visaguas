@@ -35,10 +35,10 @@ module.exports = function(app) {
 		'$scope',
 		function(data, AvailableGroups, GroupedFilter, $scope) {
 
-			$scope.title = data.data[0].estado;
+			$scope.estado = data[0].data[0];
 
 			angular.forEach(AvailableGroups, function(group) {
-				$scope[group.name] = GroupedFilter(data.data, group.selections, group.abstraction, group.raw);
+				$scope[group.name] = GroupedFilter(data[1].data, group.selections, group.abstraction, group.raw);
 			});
 
 		}

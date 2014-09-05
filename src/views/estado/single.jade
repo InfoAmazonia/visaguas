@@ -2,7 +2,8 @@ article#estado
 	.section-title.row
 		.container
 			.twelve.columns
-				h1 {{title}}
+				h1 {{estado.estado}}
+				p.alignright {{estado.total_municipios}} municípios na Amazônia Legal
 
 	.estado-content
 		.container
@@ -11,14 +12,14 @@ article#estado
 
 		.container
 			.twelve.columns
-				h3 Os 10 municípios com pior cobertura de abastecimento
+				h3 Abastecimento
 				.clear
 				nav
 					ul.clearfix
 						li(ng-repeat="selection in abastecimento.selections")
 							a(href="javascript:void(0);" ng-click="abastecimento.changeSelection(selection)" ng-class="{active:abastecimento.selection.key == selection.key}") {{selection.name}}
 				ul.bar-list.municipio-list.clearfix
-					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in abastecimento.data | orderBy:'value' | limitTo:10")
+					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in abastecimento.data | hideEmpty:'value' | orderBy:'value' | limitTo:10")
 						span.rank {{index+1}}
 						bar-item(percentage="{{municipio.value}}" data="municipio")
 							h3 {{data.municipio}}
@@ -31,7 +32,7 @@ article#estado
 						li(ng-repeat="selection in esgoto.selections")
 							a(href="javascript:void(0);" ng-click="esgoto.changeSelection(selection)" ng-class="{active:esgoto.selection.key == selection.key}") {{selection.name}}
 				ul.bar-list.municipio-list.clearfix
-					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in esgoto.data | orderBy:'value' | limitTo:10")
+					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in esgoto.data | hideEmpty:'value' | orderBy:'value' | limitTo:10")
 						span.rank {{index+1}}
 						bar-item(percentage="{{municipio.value}}" data="municipio")
 							h3 {{data.municipio}}
@@ -44,7 +45,7 @@ article#estado
 						li(ng-repeat="selection in doencas.selections")
 							a(href="javascript:void(0);" ng-click="doencas.changeSelection(selection)" ng-class="{active:doencas.selection.key == selection.key}") {{selection.name}}
 				ul.bar-list.municipio-list.clearfix
-					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in doencas.data | orderBy:'value':true | limitTo:10")
+					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in doencas.data | hideEmpty:'value' | orderBy:'value':true | limitTo:10")
 						span.rank {{index+1}}
 						bar-item(percentage="{{municipio.value}}" data="municipio" max="{{doencas.max.value}}" suffix="/100mil habitantes")
 							h3 {{data.municipio}}

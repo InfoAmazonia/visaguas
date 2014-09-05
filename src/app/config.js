@@ -18,24 +18,9 @@ module.exports = function(app) {
 					templateUrl: '/views/pages/home.html',
 					resolve: {
 						HomeData: [
-							'$q',
 							'DataService',
-							function($q, Data) {
+							function(Data) {
 								return Data.query({query: 'estados'});
-							}
-						]
-					}
-				})
-				.state('city', {
-					url: '/cidades/:ibge/',
-					controller: 'SingleCityController',
-					templateUrl: '/views/city/index.html',
-					resolve: {
-						CityData: [
-							'$stateParams',
-							'DataService',
-							function($stateParams, Data) {
-								return Data.query({ibge: $stateParams.ibge});
 							}
 						]
 					}
@@ -46,10 +31,19 @@ module.exports = function(app) {
 					templateUrl: '/views/estado/single.html',
 					resolve: {
 						EstadoData: [
+							'$q',
 							'$stateParams',
 							'DataService',
-							function($stateParams, Data) {
-								return Data.query({estado_id: $stateParams.id, limit: -1});
+							function($q, $stateParams, Data) {
+								var promises = [];
+								var queries = [
+									{query: 'estados', id: $stateParams.id},
+									{estado_id: $stateParams.id, limit: -1}
+								];
+								angular.forEach(queries, function(query) {
+									promises.push(Data.query(query));
+								});
+								return $q.all(promises);
 							}
 						]
 					}
