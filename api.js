@@ -30,6 +30,17 @@ module.exports = function(app) {
 					return i[key] == req.query[key];
 				});
 			}
+			if(req.query.orderby) {
+				if(req.query.order == 'ASC') {
+					results.data = _.sortBy(results.data, function(item) {
+						return item[req.query.orderby];
+					});
+				} else {
+					results.data = _.sortBy(results.data, function(item) {
+						return -item[req.query.orderby];
+					});
+				}
+			}
 		}
 
 		results.total = results.data.length;
