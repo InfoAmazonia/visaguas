@@ -29,5 +29,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "napa": "^0.4.1",
     "underscore": "^1.7.0"
+  },
+  "napa": {
+    "csv2json": "ile/csv2json"
   }
 }

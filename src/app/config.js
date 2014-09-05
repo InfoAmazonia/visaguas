@@ -21,19 +21,7 @@ module.exports = function(app) {
 							'$q',
 							'DataService',
 							function($q, Data) {
-								var promises = [];
-								var queries = [
-									{name: 'abastecimento_rede_geral', average: true},
-									{name: 'abastecimento_rede_geral', average: 'uf'},
-									{name: 'abastecimento_outras_formas', average: true},
-									{name: 'abastecimento_outras_formas', average: 'uf'},
-									{name: 'abastecimento_rede_geral', order: 'DESC'},
-									{name: 'abastecimento_outras_formas'}
-								];
-								angular.forEach(queries, function(query) {
-									promises.push(Data.query(query));
-								});
-								return $q.all(promises);
+								return Data.query({query: 'estados'});
 							}
 						]
 					}
@@ -48,6 +36,20 @@ module.exports = function(app) {
 							'DataService',
 							function($stateParams, Data) {
 								return Data.query({ibge: $stateParams.ibge});
+							}
+						]
+					}
+				})
+				.state('estado', {
+					url: '/uf/:id/',
+					controller: 'SingleEstadoController',
+					templateUrl: '/views/estado/single.html',
+					resolve: {
+						EstadoData: [
+							'$stateParams',
+							'DataService',
+							function($stateParams, Data) {
+								return Data.query({estado_id: $stateParams.id});
 							}
 						]
 					}

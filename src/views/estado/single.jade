@@ -1,0 +1,8 @@
+article#estado
+	.section-title.row
+		.container
+			.twelve.columns
+				h1 {{title}}
+
+		.three.columns(ng-repeat="(key,val) in data")
+			p {{key}}: {{val}}

@@ -4,68 +4,78 @@ section#home
 			.section-title.row
 				.container
 					.twelve.columns
-						h2 Situação
-						p O abastecimento de água pela rede geral
+						h2 Abastecimento de água
+						.clear
+						nav
+							ul.clearfix
+								li(ng-repeat="selection in abastecimento.selections")
+									a(href="javascript:void(0);" ng-click="abastecimento.changeSelection(selection)" ng-class="{active:abastecimento.selection.key == selection.key}") {{selection.name}}
 
 			.container
 				.eight.columns
-					ul.uf-list.clearfix
-						li.uf-item.clearfix(ng-repeat="estado in estados.redeGeral.data")
-							.data-rep(style="width:{{estado.average}}%")
-							.data.info
-								p.percentage {{estado.average}}%
-								h3 {{estado.uf}}
-								p.cities {{estado.count}} municípios
+					ul.uf-list.clearfix(ng-controller="EstadoController")
+						li.uf-item.clearfix(ng-repeat="(index, estado) in abastecimento.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+							span.rank {{index+1}}
+							bar-item(percentage="{{estado.value}}" data="estado")
 
 				.four.columns
 					.summary
-						.data-rep(style="top:{{100-redeGeral.data[0].average}}%")
 						p
-							span.big-stats {{redeGeral.data[0].average}}% 
+							span.big-stats(animate-count number="{{abastecimento.total}}" suffix="%") 
 							| das residências na 
 							strong Amazônia Legal 
-							| possuem abastecimento de água pela rede geral.
+							| possuem {{abastecimento.selection.text}}.
 
 	.row
 		.home-data-section
 			.section-title.row
 				.container
 					.twelve.columns
-						h2 Impacto
-						p O abastecimento de água por outras formas
+						h2 Acesso a esgoto
+						.clear
+						nav
+							ul.clearfix
+								li(ng-repeat="selection in esgoto.selections")
+									a(href="javascript:void(0);" ng-click="esgoto.changeSelection(selection)" ng-class="{active:esgoto.selection.key == selection.key}") {{selection.name}}
 
 			.container
 				.eight.columns
-					ul.uf-list.clearfix
-						li.uf-item(ng-repeat="estado in estados.outros.data")
-							p.percentage {{estado.average}}%
-							h3 {{estado.uf}}
-							p.cities {{estado.count}} municípios
+					ul.uf-list.clearfix(ng-controller="EstadoController")
+						li.uf-item.clearfix(ng-repeat="(index, estado) in esgoto.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+							span.rank {{index+1}}
+							bar-item(percentage="{{estado.value}}" data="estado")
 
 				.four.columns
 					.summary
-						.data-rep(style="top:{{100-outros.data[0].average}}%")
 						p
-							span.big-stats {{outros.data[0].average}}% 
+							span.big-stats(animate-count number="{{esgoto.total}}" suffix="%") 
 							| das residências na 
 							strong Amazônia Legal 
-							| possuem abastecimento de água por outras formas.
+							| possuem {{esgoto.selection.text}}.
 
 	.row
-		.container
-			.six.columns
-				h2 Proporção de DPP com rede geral como forma de abastecimento de água (2010)
-				ul(ng-controller="CityController")
-					li(ng-repeat="item in items[4].data" ng-click="accessCity(item)")
-						h3
-							a(href="javascript:void(0);") {{item.cidade}}
-						p {{item.uf}}
-						p {{item.valor}}%
-			.six.columns
-				h2 Proporção de DPP com outras formas de abastecimento de água (2010)
-				ul(ng-controller="CityController")
-					li(ng-repeat="item in items[5].data" ng-click="accessCity(item)")
-						h3
-							a(href="javascript:void(0);") {{item.cidade}}
-						p {{item.uf}}
-						p {{item.valor}}%
+		.home-data-section
+			.section-title.row
+				.container
+					.twelve.columns
+						h2 Doenças
+						.clear
+						nav
+							ul.clearfix
+								li(ng-repeat="selection in doencas.selections")
+									a(href="javascript:void(0);" ng-click="doencas.changeSelection(selection)" ng-class="{active:doencas.selection.key == selection.key}") {{selection.name}}
+
+			.container
+				.eight.columns
+					ul.uf-list.clearfix(ng-controller="EstadoController")
+						li.uf-item.clearfix(ng-repeat="(index, estado) in doencas.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+							span.rank {{index+1}}
+							bar-item(percentage="{{estado.value}}" max="{{doencas.max.value}}" suffix="/100mil habitantes" data="estado")
+
+				.four.columns
+					.summary
+						p
+							span.big-stats(animate-count number="{{doencas.total}}" suffix="") 
+							| internações por 100 mil habitantes por {{doencas.selection.name}} na  
+							strong Amazônia Legal
+							| .

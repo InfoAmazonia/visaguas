@@ -163,38 +163,50 @@ h5 {
 	color: #666;
 	font-size: 18px;
 	line-height: 150%;
-	a {
-		color: #333;
-	}
-	h1,
-	h2,
-	h3,
-	h4,
-	h5 {
-	}
 }
 
 .section-title {
 	background: #222;
 	color: rgba(255,255,255,0.5);
-	padding: 60px 0;
+	padding: 40px 0;
+	h1,
 	h2 {
 		float: left;
 		text-transform: uppercase;
-		font-size: 27px;
 		color: #fff;
 		margin: 0 20px 0 0;
 	}
-	p {
-		margin: 10px 0 0;
-		&:before {
-			content: '>';
-			float: left;
-			margin-right: 20px;
-			color: rgba(255,255,255,0.7);
-			font-size: 12px;
-			font-family: "Open Sans Condensed";
+	h2 {
+		font-size: 34px;
+	}
+	nav {
+		margin: 40px 0 -40px;
+		font-size: 14px;
+		text-transform: uppercase;
+		ul {
+			margin: 0;	
+			li {
+				margin: 0;
+				float: left;
+				a {
+					display: block;
+					padding: 15px 18px;
+					color: rgba(255,255,255,0.5);
+					text-decoration: none;
+					&:hover {
+						color: rgba(255,255,255,0.8);
+					}
+					&.active {
+						color: #333;
+						background: #fff url(../img/dots.png);
+					}
+				}
+			}
 		}
+	}
+	p {
+		margin: 8px 10px 0 0;
+		float: left;
 	}
 }
 
@@ -204,14 +216,30 @@ h5 {
 	.uf-list {
 		.uf-item {
 			position: relative;
-			padding: 0 10px;
-			margin: 0 0 1px;
+			padding: 0 0 0 40px;
+			margin: 0;
+			border-bottom: 1px solid rgba(0,0,0,0.2);
+			cursor: pointer;
 			.data-rep {
+				width: 0%;
 				position: absolute;
 				top: 0;
 				left: 0;
 				bottom: 0;
 				background: rgba(0,0,0,0.1);
+				.transition(width 1s ease-in-out);
+			}
+			.rank {
+				position: absolute;
+				left: 0;
+				top: 4px;
+				line-height: 42px;
+				width: 40px;
+				text-align: center;
+				font-size: 12px;
+				&:after {
+					content: '.'; 
+				}
 			}
 			.data-info {
 				position: relative;
@@ -228,16 +256,24 @@ h5 {
 				float: left;
 			}
 			.cities {
-				font-size: 14px;
+				font-size: 12px;
 				line-height: 42px;
-				color: #999;
+				color: #777;
 				margin-top: 2px;
 			}
 			.percentage {
-				font-size: 32px;
+				font-size: 24px;
 				line-height: 42px;
 				font-family: "Open Sans Condensed";
 				float: right;
+			}
+			&:hover {
+				.data-rep {
+					background: rgba(0,0,0,0.2);
+				}
+				.percentage {
+					color: #333;
+				}
 			}
 		}
 	}
@@ -267,14 +303,6 @@ h5 {
 			background: darken(@summary, 5%) url(../img/dots.png);
 			color: rgba(255,255,255,1);
 			border: 1px solid darken(@summary, 10%);
-		}
-		.data-rep {
-			background: rgba(0,0,0,0.2);
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 10px;
-			z-index: 0;
 		}
 	}
 }

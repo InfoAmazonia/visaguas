@@ -1,12 +1,19 @@
 'use strict';
 
-var _ = require('underscore');
+var fs = require('fs'),
+	_ = require('underscore');
 
 module.exports = function(app) {
 
 	app.get('/api', function(req, res) {
 
-		var data = app.get('data');
+		var data;
+
+		if(req.query.query == 'estados') {
+			data = app.get('estados');
+		} else {
+			data = app.get('municipios');
+		}
 
 		var limit = parseInt(req.query.limit) || 20;
 		var page = parseInt(req.query.page) || 1;
@@ -23,46 +30,6 @@ module.exports = function(app) {
 					return i[key] == req.query[key];
 				});
 			}
-			if(req.query.name && results.data[0].valor != undefined) {
-				results.data = _.sortBy(results.data, function(i) {
-					if(req.query.order == 'DESC')
-						return i.valor;
-					else
-						return -i.valor;
-				});
-			}
-		}
-
-		if(req.query.average) {
-
-			var response = [];
-
-			var key = req.query.average;
-
-			var indexes = _.uniq(_.map(results.data, function(i) { return i[key]; }));
-
-			_.each(indexes, function(index) {
-
-				var items = _.filter(results.data, function(i) { return i[key] == index; });
-
-				var sum = _.map(items, function(i) { return i.valor; }).reduce(function(a, b) { return a + b; });
-
-				var indexData = {
-					count: items.length,
-					average: (sum / items.length).toFixed(2)
-				};
-
-				if(index != undefined) {
-					indexData[key] = index;
-				}
-
-				response.push(indexData);
-
-
-			});
-
-			results.data = response;
-
 		}
 
 		results.total = results.data.length;
@@ -70,49 +37,34 @@ module.exports = function(app) {
 		if(page*limit > results.total && page !== 1)
 			res.send([]);
 		else {
-
 			if(limit !== -1)
 				results.data = results.data.slice(((page-1)*limit), ((page-1)*limit) + limit);
-
 			res.send(results);
 		}
 
 	});
 
-	app.get('/api/all', function(req, res) {
+	app.get('/api/municipios', function(req, res) {
 
-		var data = app.get('data');
-		var cities = app.get('cities');
+		if(req.query.format == 'csv') {
+			fs.readFile('data/municipios.csv', function(err, data) {
+				res.send(data);
+			});
+		} else {
+			res.send(app.get('municipios'));
+		}
 
-		var result = _.map(cities, function(city) { return {cidade: city.cidade, ibge: city.ibge}; });
+	});
 
-		_.each(data, function(i) {
-			var city = _.find(result, function(c) { return c.ibge == i.ibge; });
-			if(city) {
-				city[i.name] = i.valor;
-			} else {
-				console.log('city not found');
-			}
-		});
+	app.get('/api/estados', function(req, res) {
 
-		var internacao = [
-			'amebiase',
-			'colera',
-			'dengue',
-			'esquistossomose',
-			'filariose',
-			'leptospirose',
-			'tifoide',
-			'diarreia'
-		];
-
-		_.each(result, function(i) {
-
-			i['totalInternacao'] = internacao.reduce(function(a, b) { return a + i[b]; }, 0).toFixed(2);
-
-		});
-
-		res.send(result);
+		if(req.query.format == 'csv') {
+			fs.readFile('data/estados.csv', function(err, data) {
+				res.send(data);
+			});
+		} else {
+			res.send(app.get('estados'));
+		}
 
 	});
 
