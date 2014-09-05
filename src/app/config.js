@@ -49,7 +49,7 @@ module.exports = function(app) {
 							'$stateParams',
 							'DataService',
 							function($stateParams, Data) {
-								return Data.query({estado_id: $stateParams.id});
+								return Data.query({estado_id: $stateParams.id, limit: -1});
 							}
 						]
 					}

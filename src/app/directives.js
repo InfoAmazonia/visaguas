@@ -58,19 +58,22 @@ module.exports = function(app) {
 				scope: {
 					data: '='
 				},
+				transclude: true,
 				template:	'<div class="data-rep"></div>' +
 							'<div class="data-info">' +
 								'<p class="percentage"></p>' +
-								'<h3>{{data.estado}}</h3>' +
-								'<p class="cities">{{data.municipios}} municípios</p>' +
+								'<ng-transclude></ng-transclude>' +
 							'</div>',
-				link: function(scope, element, attrs) {
+				link: function(scope, element, attrs, controller, transclude) {
 
-					console.log(scope.data);
+					transclude(scope, function(clone, scope) {
+						element.append(clone);
+					});
 
 					var topOffset;
 					var windowHeight;
 
+	
 					var suffix = attrs.suffix || '%';
 
 					var updateSizes = function() {

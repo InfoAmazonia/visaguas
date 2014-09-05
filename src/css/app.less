@@ -212,71 +212,72 @@ h5 {
 
 @summary: #1abc9c;
 
-.home-data-section {
-	.uf-list {
-		.uf-item {
+.bar-list {
+	.bar-item {
+		position: relative;
+		padding: 0 0 0 40px;
+		margin: 0;
+		border-bottom: 1px solid rgba(0,0,0,0.2);
+		cursor: pointer;
+		.data-rep {
+			width: 0%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.1);
+			.transition(width 1s ease-in-out);
+		}
+		.rank {
+			position: absolute;
+			left: 0;
+			top: 4px;
+			line-height: 42px;
+			width: 40px;
+			text-align: center;
+			font-size: 12px;
+			&:after {
+				content: '.'; 
+			}
+		}
+		.data-info {
 			position: relative;
-			padding: 0 0 0 40px;
+			z-index: 1;
+		}
+		p {
 			margin: 0;
-			border-bottom: 1px solid rgba(0,0,0,0.2);
-			cursor: pointer;
+		}
+		h3 {
+			font-weight: 700;
+			font-size: 20px;
+			line-height: 42px;
+			margin: 0 10px 0 0;
+			float: left;
+		}
+		.municipios {
+			font-size: 12px;
+			line-height: 42px;
+			color: #777;
+			margin-top: 2px;
+		}
+		.percentage {
+			font-size: 24px;
+			line-height: 42px;
+			font-family: "Open Sans Condensed";
+			float: right;
+		}
+		&:hover {
 			.data-rep {
-				width: 0%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				bottom: 0;
-				background: rgba(0,0,0,0.1);
-				.transition(width 1s ease-in-out);
-			}
-			.rank {
-				position: absolute;
-				left: 0;
-				top: 4px;
-				line-height: 42px;
-				width: 40px;
-				text-align: center;
-				font-size: 12px;
-				&:after {
-					content: '.'; 
-				}
-			}
-			.data-info {
-				position: relative;
-				z-index: 1;
-			}
-			p {
-				margin: 0;
-			}
-			h3 {
-				font-weight: 700;
-				font-size: 20px;
-				line-height: 42px;
-				margin: 0 10px 0 0;
-				float: left;
-			}
-			.cities {
-				font-size: 12px;
-				line-height: 42px;
-				color: #777;
-				margin-top: 2px;
+				background: rgba(0,0,0,0.2);
 			}
 			.percentage {
-				font-size: 24px;
-				line-height: 42px;
-				font-family: "Open Sans Condensed";
-				float: right;
-			}
-			&:hover {
-				.data-rep {
-					background: rgba(0,0,0,0.2);
-				}
-				.percentage {
-					color: #333;
-				}
+				color: #333;
 			}
 		}
 	}
+}
+
+.home-data-section {
 	.summary {
 		line-height: 150%;
 		font-size: 24px;

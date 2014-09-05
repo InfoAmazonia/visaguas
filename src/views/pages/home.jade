@@ -13,10 +13,12 @@ section#home
 
 			.container
 				.eight.columns
-					ul.uf-list.clearfix(ng-controller="EstadoController")
-						li.uf-item.clearfix(ng-repeat="(index, estado) in abastecimento.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+					ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
+						li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in abastecimento.data | orderBy:'estado'" ng-click="accessState(estado.id)")
 							span.rank {{index+1}}
 							bar-item(percentage="{{estado.value}}" data="estado")
+								h3 {{data.estado}}
+								p.municipios {{data.municipios}} municipios
 
 				.four.columns
 					.summary
@@ -40,10 +42,12 @@ section#home
 
 			.container
 				.eight.columns
-					ul.uf-list.clearfix(ng-controller="EstadoController")
-						li.uf-item.clearfix(ng-repeat="(index, estado) in esgoto.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+					ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
+						li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in esgoto.data | orderBy:'estado'" ng-click="accessState(estado.id)")
 							span.rank {{index+1}}
 							bar-item(percentage="{{estado.value}}" data="estado")
+								h3 {{data.estado}}
+								p.municipios {{data.municipios}} municipios
 
 				.four.columns
 					.summary
@@ -67,10 +71,12 @@ section#home
 
 			.container
 				.eight.columns
-					ul.uf-list.clearfix(ng-controller="EstadoController")
-						li.uf-item.clearfix(ng-repeat="(index, estado) in doencas.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+					ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
+						li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in doencas.data | orderBy:'estado'" ng-click="accessState(estado.id)")
 							span.rank {{index+1}}
 							bar-item(percentage="{{estado.value}}" max="{{doencas.max.value}}" suffix="/100mil habitantes" data="estado")
+								h3 {{data.estado}}
+								p.municipios {{data.municipios}} municipios
 
 				.four.columns
 					.summary
