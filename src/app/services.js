@@ -36,109 +36,130 @@ module.exports = function(app) {
 
 	app.factory('AvailableGroups', [
 		function() {
-
 			return [
 				{
+					title: 'Abastecimento de água',
 					name: 'abastecimento',
 					abstraction: '_%',
 					raw: 'dpp',
+					color: '#00f',
 					selections: [
 						{
 							name: 'Rede geral',
 							key: 'agua_rede_geral',
+							mapKey: 'agua_rede_',
 							text: 'abastecimento de água pela rede geral'
 						},
 						{
 							name: 'Poço ou nascente',
 							key: 'agua_poco_nascente',
+							mapKey: 'agua_poco_',
 							text: 'abastecimento de água por poço ou nascente'
 						},
 						{
 							name: 'Chuva armazenada em cisterna',
 							key: 'agua_cisterna',
+							mapKey: 'agua_ciste',
 							text: 'abastecimento de água por chuva armazenada em cisterna'
 						},
 						{
 							name: 'Outras formas',
 							key: 'agua_outras',
+							mapKey: 'agua_outra',
 							text: 'abastecimento de água por outras formas'
 						}
 					]
 				},
 				{
+					title: 'Acesso a esgoto',
 					name: 'esgoto',
 					abstraction: '_%',
 					raw: 'dpp',
+					color: '#f00',
 					selections: [
 						{
 							name: 'Rede geral',
 							key: 'esgoto_rede_geral',
+							mapKey: 'esgoto_red',
 							text: 'acesso a esgoto pela rede geral'
 						},
 						{
 							name: 'Fossa séptica',
 							key: 'esgoto_fossa_septica',
+							mapKey: 'esgoto_fos',
 							text: 'acesso a esgoto via fossa séptica'
 						},
 						{
 							name: 'Fossa rudimentar',
 							key: 'esgoto_fossa_rudimentar',
+							mapKey: 'esgoto_f_1',
 							text: 'acesso a esgoto via fossa rudimentar'
 						},
 						{
 							name: 'Vala',
 							key: 'esgoto_vala',
+							mapKey: 'esgoto_val',
 							text: 'acesso a esgoto por vala'
 						},
 						{
 							name: 'Rio, lago ou mar',
 							key: 'esgoto_rio_lago_mar',
+							mapKey: 'esgoto_rio',
 							text: 'acesso a esgoto via rio, lago ou mar'
 						},
 						{
 							name: 'Outro',
 							key: 'esgoto_outros',
+							mapKey: 'esgoto_out',
 							text: 'acesso a esgoto por outras formas'
 						}
 					]
 				},
 				{
+					title: 'Doenças',
 					name: 'doencas',
 					abstraction: '_pcmh',
 					raw: 'populacao',
+					color: '#0f0',
 					selections: [
 						{
 							name: 'Amebíase',
-							key: 'amebiase'
+							key: 'amebiase',
+							mapKey: 'amebiase'
 						},
 						{
 							name: 'Cólera',
-							key: 'colera'
+							key: 'colera',
+							mapKey: 'colera'
 						},
 						{
 							name: 'Dengue',
-							key: 'dengue'
+							key: 'dengue',
+							mapKey: 'dengue'
 						},
 						{
 							name: 'Esquistossomose',
-							key: 'esquistossomose'
+							key: 'esquistossomose',
+							mapKey: 'esquistoss'
 						},
 						{
 							name: 'Filariose',
-							key: 'filariose'
+							key: 'filariose',
+							mapKey: 'filariose'
 						},
 						{
 							name: 'Leptospirose',
-							key: 'leptospirose'
+							key: 'leptospirose',
+							mapKey: 'leptospiro'
 						},
 						{
 							name: 'Febre tifóide',
-							key: 'tifoide'
+							key: 'tifoide',
+							mapKey: 'tifoide'
 						}
 					]
 				}
 			];
-
 		}
 	]);
 

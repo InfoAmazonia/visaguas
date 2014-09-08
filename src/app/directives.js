@@ -2,6 +2,29 @@
 
 module.exports = function(app) {
 
+	app.directive('homeDataSection', [
+		function() {
+			return {
+				restrict: 'E',
+				templateUrl: '/views/partials/home-data-section.html',
+				scope: {
+					group: '='
+				},
+				link: function(scope, element, attrs) {
+					if(scope.group.abstraction !== '_%') {
+						scope.group.maxValue = scope.group.max.value;
+					}
+					if(scope.group.abstraction == '_pcmh') {
+						scope.group.suffix = '/100 mil habitantes';
+					}
+
+					element.find('.section-content').height($(window).height());
+
+				}
+			}
+		}
+	]);
+
 	app.directive('animateCount', [
 		function() {
 			return {
@@ -51,53 +74,9 @@ module.exports = function(app) {
 		}
 	]);
 
-	app.directive('map', [
-		function() {
-			return {
-				restrict: 'E',
-				link: function(scope, element, attrs) {
-					var map = L.map(element[0], {center: [-2,-2], zoom: 4});
-
-					var column = 'agua_rede_';
-
-					var sql = new cartodb.SQL({user: 'infoamazonia'});
-
-					var quantiles;
-					var cartocss = [
-						'#merge_fiocruz { polygon-fill: #ffcc00; polygon-opacity: 0; }',
-						'#merge_fiocruz[ data <= 0 ] { polygon-opacity: 0; }'
-					];
-
-					sql
-						.execute('SELECT CDB_QuantileBins(array_agg(cast(merge_fiocruz.' + column + ' as numeric)), 7) FROM merge_fiocruz WHERE ' + column + ' IS NOT null')
-						.done(function(data) {
-
-							quantiles = data.rows[0].cdb_quantilebins;
-
-							_.each(quantiles, function(qt, i) {
-								cartocss.push('#merge_fiocruz[ data <= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; }');
-							});
-
-							cartodb.createLayer(map, {
-								user_name: 'infoamazonia',
-								type: 'cartodb',
-								sublayers: [{
-									sql: 'SELECT ' + column + ' as data, * FROM merge_fiocruz WHERE estado_id IS NOT NULL',
-									cartocss: cartocss.join(' ')
-								}]
-							})
-							.addTo(map);
-
-						});
-
-					//cartodb.createVis(element[0], 'http://infoamazonia.cartodb.com/api/v2/viz/113859a0-3538-11e4-98be-0edbca4b5057/viz.json');
-				}
-			}
-		}
-	]);
-
 	app.directive('barItem', [
-		function() {
+		'$rootScope',
+		function($rootScope) {
 			return {
 				restrict: 'E',
 				scope: {
@@ -112,7 +91,7 @@ module.exports = function(app) {
 				link: function(scope, element, attrs, controller, transclude) {
 
 					transclude(scope, function(clone, scope) {
-						element.append(clone);
+						element.find('.data-info').append(clone);
 					});
 
 					var topOffset;
@@ -151,6 +130,7 @@ module.exports = function(app) {
 						if(scrollTop + windowHeight >= topOffset && !triggered) {
 							triggered = true;
 							start();
+							$rootScope.$broadcast('barItemStartedAnimation');
 						}
 					};
 					animate();
@@ -161,7 +141,138 @@ module.exports = function(app) {
 		}
 	]);
 
+	app.directive('map', [
+		'$rootScope',
+		function($rootScope) {
+			return {
+				restrict: 'E',
+				link: function(scope, element, attrs) {
+
+					var map = L.map(element[0], {
+						center: [0,0],
+						zoom: 1,
+						scrollWheelZoom: false,
+						infowindow: true
+					});
+
+					map.addLayer(L.tileLayer(attrs.baselayer));
+
+					var user = attrs.user || 'infoamazonia';
+					var table = attrs.table || 'merge_fiocruz';
+					var column =  attrs.column || 'agua_rede_';
+					var color = attrs.color || '#ffcc00';
+
+					var sql = new cartodb.SQL({user: user});
+
+					var select = 'SELECT ' + column + ' as value, * FROM ' + table;
+
+					if(attrs.where) {
+						select += ' WHERE ' + attrs.where;
+					}
+
+					getCartoDBQuantiles(sql, table, column, function(quantiles) {
+
+						sql.getBounds(select).done(function(bounds) {
+
+							map.fitBounds(bounds);
+
+							cartodb.createLayer(map, {
+								user_name: user,
+								type: 'cartodb',
+								sublayers: [{
+									sql: select,
+									cartocss: getCartoCSS(table, color, quantiles),
+									interactivity: attrs.interactivity || 'value'
+								}],
+								options: {
+									tooltip: true
+								}
+							})
+							.addTo(map)
+							.done(function(layer) {
+
+								fixMap(map, bounds);
+
+								$rootScope.$on('barItemStartedAnimation', function() {
+									fixMap(map, bounds);
+								});
+
+								var sublayer = layer.getSubLayer(0);
+
+								attrs.$observe('column', function(column) {
+
+									//update quantiles
+									getCartoDBQuantiles(sql, table, column, function(qts) {
+
+										quantiles = qts;
+
+										// set new cartocss
+										sublayer.set({'cartocss': getCartoCSS(table, color, quantiles)});
+
+										// update query
+										var select = 'SELECT ' + column + ' as value, * FROM ' + table;
+										if(attrs.where) {
+											select += ' WHERE ' + attrs.where;
+										}
+										sublayer.set({'sql': select});
+
+									});
+								});
+
+								attrs.$observe('color', function(column) {
+									sublayer.set({'cartocss': getCartoCSS(table, color, quantiles)});
+								});
+
+								sublayer.setInteraction(true);
+
+								layer.on('featureOver', function(event, latlng, pos, data, layerIndex) {
+									$rootScope.$broadcast('cartodbFeatureOver', _.extend({id: attrs.id}, data));
+								});
+
+								layer.on('featureOut', function(event) {
+									$rootScope.$broadcast('cartodbFeatureOver', {id: attrs.id});
+								});
+
+							});
+
+						});
+
+					});
+				}
+			}
+		}
+	]);
+
 };
+
+function fixMap(map, bounds) {
+	map.invalidateSize(true);
+	setTimeout(function() {
+		map.fitBounds(bounds);
+		map.invalidateSize(true);
+	}, 100);
+}
+
+function getCartoCSS(table, color, quantiles) {
+
+	var cartocss = [
+		'#' + table + ' { polygon-fill: ' + color + '; polygon-opacity: 0; }',
+		'#' + table + '[ value <= 0 ] { polygon-opacity: 0; }'
+	];
+
+	_.each(quantiles, function(qt, i) {
+		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; }');
+	});
+
+	return cartocss.join(' ');
+
+}
+
+function getCartoDBQuantiles(sql, table, column, cb) {
+	sql.execute('SELECT CDB_QuantileBins(array_agg(cast(' + table + '.' + column + ' as numeric)), 7) FROM ' + table + ' WHERE ' + column + ' IS NOT null').done(function(data) {
+		cb(data.rows[0].cdb_quantilebins);
+	});
+}
 
 function numberInterval(options, callback, endCallback) {
 

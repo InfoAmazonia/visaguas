@@ -5,6 +5,12 @@ article#estado
 				h1 {{estado.estado}}
 				p.alignright {{estado.total_municipios}} municípios na Amazônia Legal
 
+	.anti-row.map-container
+		map#map(user="infoamazonia" table="merge_fiocruz" column="agua_rede_" where="estado_id = {{estado.id}}" color="#ffcc00" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value")
+		.infowindow(ng-show="map.municipio")
+			h4 {{map.municipio}}
+			p {{map.value}}%
+
 	.estado-content
 		.container
 			.twelve.columns
