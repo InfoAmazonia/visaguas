@@ -9,37 +9,55 @@ module.exports = function(app) {
 		'$scope',
 		function(data, AvailableGroups, GroupedFilter, $scope) {
 
+			$scope.groups = {};
+
 			angular.forEach(AvailableGroups, function(group) {
 
-				$scope[group.name] = _.extend(group, GroupedFilter(data.data, group.selections, group.abstraction, group.raw));
+				$scope.groups[group.name] = _.extend(group, GroupedFilter(data.data, group.selections, group.abstraction, group.raw));
 
-				$scope[group.name].title = group.title;
-				$scope[group.name].name = group.name;
-				$scope[group.name].color = group.color;
+			});
 
-				$scope.$on('cartodbFeatureOver', function(event, data) {
-					if(data.id == group.name && data.value) {
+			$scope.selectGroup = function(group) {
+
+				$scope.group = group;
+
+				if(group.abstraction !== '_%') {
+					group.useMax = true;
+				} else {
+					group.useMax = false;
+				}
+				if(group.abstraction == '_pcmh') {
+					group.suffix = '/100 mil hab.';
+				}
+
+			}
+
+			$scope.selectGroup($scope.groups.abastecimento);
+
+			$scope.map = false;
+
+			$scope.$on('cartodbFeatureOver', function(event, data) {
+				var group = _.find($scope.groups, function(g) { return g.name == data.id; });
+				if(group) {
+					if(data.value) {
 						if(group.abstraction == '_%') {
 							data.value = (data.value*100).toFixed(2) + '%';
 						}
 						$scope.$apply(function() {
-							$scope[group.name].map = data;
+							$scope.map = data;
 						});
 					} else {
 						$scope.$apply(function() {
-							$scope[group.name].map = false;
+							$scope.map = false;
 						});
 					}
-				});
+				}
+			});
 
-				$scope.$on('cartodbFeatureOut', function(event, data) {
-					if(data.id == group.name) {
-						$scope.$apply(function() {
-							$scope[group.name].map = false;
-						});
-					}
+			$scope.$on('cartodbFeatureOut', function(event, data) {
+				$scope.$apply(function() {
+					$scope.map = false;
 				});
-
 			});
 
 		}
@@ -64,29 +82,57 @@ module.exports = function(app) {
 		'$scope',
 		function(data, AvailableGroups, GroupedFilter, $scope) {
 
-			$scope.map = {};
+			$scope.estado = data[0].data[0];
+
+			$scope.groups = {};
+
+			angular.forEach(AvailableGroups, function(group) {
+
+				$scope.groups[group.name] = _.extend(group, GroupedFilter(data[1].data, group.selections, group.abstraction, group.raw));
+
+			});
+
+			$scope.selectGroup = function(group) {
+
+				$scope.group = group;
+
+				if(group.abstraction !== '_%') {
+					group.useMax = true;
+				} else {
+					group.useMax = false;
+				}
+				if(group.abstraction == '_pcmh') {
+					group.suffix = '/100 mil hab.';
+				}
+
+			}
+
+			$scope.selectGroup($scope.groups.abastecimento);
+
+			$scope.map = false;
 
 			$scope.$on('cartodbFeatureOver', function(event, data) {
-				if(data.id == 'map') {
-					data.value = (data.value*100).toFixed(2);
-					$scope.$apply(function() {
-						$scope.map = data;
-					});
+				var group = _.find($scope.groups, function(g) { return g.name == data.id; });
+				if(group) {
+					if(data.value) {
+						if(group.abstraction == '_%') {
+							data.value = (data.value*100).toFixed(2) + '%';
+						}
+						$scope.$apply(function() {
+							$scope.map = data;
+						});
+					} else {
+						$scope.$apply(function() {
+							$scope.map = false;
+						});
+					}
 				}
 			});
 
 			$scope.$on('cartodbFeatureOut', function(event, data) {
-				if(data.id == 'map') {
-					$scope.$apply(function() {
-						$scope.map = {};
-					});
-				}
-			});
-
-			$scope.estado = data[0].data[0];
-
-			angular.forEach(AvailableGroups, function(group) {
-				$scope[group.name] = GroupedFilter(data[1].data, group.selections, group.abstraction, group.raw);
+				$scope.$apply(function() {
+					$scope.map = false;
+				});
 			});
 
 		}

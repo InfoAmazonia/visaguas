@@ -1,15 +1,39 @@
 article#estado
+	.data-section
+		.section-title
+			.container
+				.three.columns
+					h1 {{estado.estado}}
+				.nine.columns
+					.title-group-item(ng-repeat="g in groups" ng-class="{active: g == group}")
+						h2(ng-click="selectGroup(g)") {{g.title}}
+					.clear
+					nav(ng-repeat="g in groups" ng-show="group == g")
+						ul
+							li(ng-repeat="selection in g.selections")
+								a(href="javascript:void(0);" ng-click="group.changeSelection(selection)" ng-class="{active:group.selection.key == selection.key}") {{selection.name}}
+
+		.section-content.with-map
+			.map-container.right
+				map#map.map(group="{{group.name}}" user="infoamazonia" table="merge_fiocruz" column="{{group.selection.mapKey}}" where="estado_id = {{estado.id}}" color="{{group.color}}" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value")
+				.infowindow(ng-show="map")
+					h4 {{map.municipio}}
+					p {{map.value}}
+
+			ul.bar-list.municipio-list.inside-map.clearfix
+				li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in group.data | hideEmpty:'value' | orderBy:'value' | limitTo:10")
+					span.rank {{index+1}}
+					bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
+						h3 {{data.municipio}}
+
+			p.not-found(ng-hide="group.data.length") Nenhum resultado foi encontrado
+
+//
 	.section-title.row
 		.container
 			.twelve.columns
 				h1 {{estado.estado}}
 				p.alignright {{estado.total_municipios}} municípios na Amazônia Legal
-
-	.anti-row.map-container
-		map#map(user="infoamazonia" table="merge_fiocruz" column="agua_rede_" where="estado_id = {{estado.id}}" color="#ffcc00" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value")
-		.infowindow(ng-show="map.municipio")
-			h4 {{map.municipio}}
-			p {{map.value}}%
 
 	.estado-content
 		.container

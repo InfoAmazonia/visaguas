@@ -2,29 +2,6 @@
 
 module.exports = function(app) {
 
-	app.directive('homeDataSection', [
-		function() {
-			return {
-				restrict: 'E',
-				templateUrl: '/views/partials/home-data-section.html',
-				scope: {
-					group: '='
-				},
-				link: function(scope, element, attrs) {
-					if(scope.group.abstraction !== '_%') {
-						scope.group.maxValue = scope.group.max.value;
-					}
-					if(scope.group.abstraction == '_pcmh') {
-						scope.group.suffix = '/100 mil habitantes';
-					}
-
-					element.find('.section-content').height($(window).height());
-
-				}
-			}
-		}
-	]);
-
 	app.directive('animateCount', [
 		function() {
 			return {
@@ -116,9 +93,9 @@ module.exports = function(app) {
 						countTo: attrs.percentage
 					}, function(num, countTo) {
 						element.find('.data-rep').css({width: parseBar(countTo)});
-						element.find('.percentage').text(num.toFixed(2) + suffix);
+						element.find('.percentage').html(num.toFixed(2) + '<span class="suffix">' + suffix + '</span>');
 					}, function(countTo) {
-						element.find('.percentage').text(countTo + suffix);
+						element.find('.percentage').html(countTo + '<span class="suffix">' + suffix + '</span>');
 					});
 
 					$(window).resize(updateSizes);
@@ -160,7 +137,7 @@ module.exports = function(app) {
 					var user = attrs.user || 'infoamazonia';
 					var table = attrs.table || 'merge_fiocruz';
 					var column =  attrs.column || 'agua_rede_';
-					var color = attrs.color || '#ffcc00';
+					var color = attrs.color || 'transparent';
 
 					var sql = new cartodb.SQL({user: user});
 
@@ -174,7 +151,11 @@ module.exports = function(app) {
 
 						sql.getBounds(select).done(function(bounds) {
 
-							map.fitBounds(bounds);
+							$rootScope.$broadcast('cartodbMapReady', {
+								id: attrs.group,
+								map: map,
+								bounds: bounds
+							});
 
 							cartodb.createLayer(map, {
 								user_name: user,
@@ -193,44 +174,40 @@ module.exports = function(app) {
 
 								fixMap(map, bounds);
 
-								$rootScope.$on('barItemStartedAnimation', function() {
-									fixMap(map, bounds);
-								});
-
 								var sublayer = layer.getSubLayer(0);
 
-								attrs.$observe('column', function(column) {
+								var update = _.debounce(function() {
 
 									//update quantiles
-									getCartoDBQuantiles(sql, table, column, function(qts) {
+									getCartoDBQuantiles(sql, table, attrs.column, function(qts) {
 
 										quantiles = qts;
 
 										// set new cartocss
-										sublayer.set({'cartocss': getCartoCSS(table, color, quantiles)});
+										sublayer.set({'cartocss': getCartoCSS(table, attrs.color, quantiles)});
 
 										// update query
-										var select = 'SELECT ' + column + ' as value, * FROM ' + table;
+										var select = 'SELECT ' + attrs.column + ' as value, * FROM ' + table;
 										if(attrs.where) {
 											select += ' WHERE ' + attrs.where;
 										}
 										sublayer.set({'sql': select});
 
 									});
-								});
 
-								attrs.$observe('color', function(column) {
-									sublayer.set({'cartocss': getCartoCSS(table, color, quantiles)});
-								});
+								}, 100);
+
+								attrs.$observe('group', update);
+								attrs.$observe('column', update);
 
 								sublayer.setInteraction(true);
 
 								layer.on('featureOver', function(event, latlng, pos, data, layerIndex) {
-									$rootScope.$broadcast('cartodbFeatureOver', _.extend({id: attrs.id}, data));
+									$rootScope.$broadcast('cartodbFeatureOver', _.extend({id: attrs.group}, data));
 								});
 
 								layer.on('featureOut', function(event) {
-									$rootScope.$broadcast('cartodbFeatureOver', {id: attrs.id});
+									$rootScope.$broadcast('cartodbFeatureOver', {id: attrs.group});
 								});
 
 							});
@@ -246,10 +223,9 @@ module.exports = function(app) {
 };
 
 function fixMap(map, bounds) {
-	map.invalidateSize(true);
 	setTimeout(function() {
+		map.invalidateSize(false);
 		map.fitBounds(bounds);
-		map.invalidateSize(true);
 	}, 100);
 }
 
