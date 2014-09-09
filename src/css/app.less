@@ -160,7 +160,7 @@ h5 {
 #content {
 	min-height:100%;
 	background: #fff url(../img/dots.png);
-	color: #666;
+	color: #444;
 	font-size: 18px;
 	line-height: 150%;
 	.map-container {
@@ -197,14 +197,60 @@ h5 {
 	}
 }
 
+#intro {
+	padding: 50px 0;
+	max-width: 600px;
+	margin: 0 auto;
+	.big {
+		font-size: 130%;
+		line-height: 150%;
+		color: #333;
+	}
+	.num {
+		font-size: 130%;
+		font-weight: 600;
+	}
+	.left,
+	.right {
+		width: 50%;
+		margin-top: 20px;
+		height: 120px;
+	}
+	.left {
+		float: left;
+		margin-left: -40px;
+	}
+	.right {
+		float: right;
+		margin-right: -40px;
+	}
+}
+
+#about {
+	padding: 50px 0;
+	max-width: 600px;
+	margin: 0 auto;
+	font-size: 30px;
+	line-height: 40px;
+	color: #333;
+	text-align: center;
+	font-family: "Open Sans Condensed";
+	font-weight: 200;
+	background: #fff url(../img/dots.png);
+	p {
+		margin: 0;
+	}
+}
+
 .section-title {
 	background: #222;
 	color: rgba(255,255,255,0.5);
 	padding: 40px 0 20px;
+	text-align: center;
 	h1 {
 		font-size: 50px;
 		line-height: 50px;
-		border-right: 1px solid rgba(255,255,255,0.5);
+		border-right: 1px solid rgba(255,255,255,0.2);
 		float: none;
 		text-transform: uppercase;
 		color: #fff;
@@ -230,14 +276,16 @@ h5 {
 		}
 	}
 	.title-group-item {
-		float:left;
-		margin-right: 10px;
+		text-align: center;
+		display: inline;
+		padding-right: 10px;
 		h2 {
-			float: none;
+			display: inline;
 			margin: 0;
 			color: rgba(255,255,255,0.2);
 			.transition(color .2s ease-in-out);
 			cursor: pointer;
+			float: none;
 		}
 		&:hover h2 {
 			color: rgba(255,255,255,0.5);
@@ -251,13 +299,14 @@ h5 {
 		font-size: 13px;
 		text-transform: uppercase;
 		margin-top: 20px;
+		text-align: center;
 		ul {
 			margin: 0;	
 			li {
 				margin: 0;
-				float: left;
+				display: inline;
 				a {
-					display: block;
+					display: inline;
 					padding: 5px 10px;
 					color: rgba(255,255,255,0.5);
 					text-decoration: none;
@@ -443,6 +492,24 @@ h5 {
 			background: darken(@summary, 5%) url(../img/dots.png);
 			color: rgba(255,255,255,1);
 			border: 1px solid darken(@summary, 10%);
+		}
+	}
+}
+
+#mastfoot {
+	padding: 60px 0;
+	background: #111;
+	color: rgba(255,255,255,0.5);
+	text-align: center;
+	h2 {
+		color: #fff;
+	}
+	p {
+		margin: 0 0 10px;
+		a {
+			color: #fff;
+			font-weight: 600;
+			text-decoration: none;
 		}
 	}
 }
