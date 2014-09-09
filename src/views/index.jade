@@ -19,7 +19,7 @@ html(lang='pt-BR')
 		.clear
 
 		#about
-			p Visaguas é um aplicativo da plataforma InfoAmazonia.org dedicada a concentrar dados sobre o acesso ao saneamento, a qualidade d´água e as enfermidades de veiculação hídrica na região amazônica.
+			p VISAGUAS é um aplicativo da plataforma InfoAmazonia.org dedicada a concentrar dados sobre o acesso ao saneamento, a qualidade d´água e as enfermidades de veiculação hídrica na região amazônica.
 
 		footer#mastfoot
 			.container
@@ -37,13 +37,13 @@ html(lang='pt-BR')
 						p Acesso a esgotamento sanitário: Censo 2010 - IBGE
 						p Enfermidades: Dados do DataSUS (AIH e SINAM) conforme organização do projeto Água Brasil da Fiocruz
 						p Outras fontes utilizadas: Agência Nacional de Água (ANA), Instituto Trata Brasil
+				.row
+					.twelve.columns
+						p.thanks
+							| Agradecimento a todos os participantes da 
+							a(href="http://www.meetup.com/Hacks-Hackers-Sao-Paulo/events/203744692/" target="_blank") Hackaton “Dados e Sensores para medir qualidade de água”
 				.twelve.columns
-					p.thanks
-						| Agradecimento a todos os participantes da 
-						a(href="http://www.meetup.com/Hacks-Hackers-Sao-Paulo/events/203744692/" target="_blank") Hackaton “Dados e Sensores para medir qualidade de água”
-
-		//
-			#loading(loading-status-message='loading-status-message', ng-class='{active: loads.length}')
-			.loading-message
+					p.source
+						a(href="https://github.com/oeco/visaguas" target="_blank") GitHub
 
 		include includes/foot
