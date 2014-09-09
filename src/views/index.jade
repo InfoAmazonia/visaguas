@@ -23,19 +23,24 @@ html(lang='pt-BR')
 
 		footer#mastfoot
 			.container
-				.six.columns
-					h2 Equipe
-					p
-						a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia
-					p Visualização: Miguel Peixe
-					p Análise e base de dados: Vitor George
-					p Texto: Gustavo Faleiros
-				.six.columns
-					h2 Dados
-					p Acesso à rede geral de saneamento: Censo 2010 - IBGE
-					p Acesso a esgotamento sanitário: Censo 2010 - IBGE
-					p Enfermidades: Dados do DataSUS (AIH e SINAM) conforme organização do projeto Água Brasil da Fiocruz
-					p Outras fontes utilizadas: Agência Nacional de Água (ANA), Instituto Trata Brasil
+				.row
+					.six.columns
+						h2 Equipe
+						p
+							a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia
+						p Visualização: Miguel Peixe
+						p Análise e base de dados: Vitor George
+						p Texto: Gustavo Faleiros
+					.six.columns
+						h2 Dados
+						p Acesso à rede geral de saneamento: Censo 2010 - IBGE
+						p Acesso a esgotamento sanitário: Censo 2010 - IBGE
+						p Enfermidades: Dados do DataSUS (AIH e SINAM) conforme organização do projeto Água Brasil da Fiocruz
+						p Outras fontes utilizadas: Agência Nacional de Água (ANA), Instituto Trata Brasil
+				.twelve.columns
+					p.thanks
+						| Agradecimento a todos os participantes da 
+						a(href="http://www.meetup.com/Hacks-Hackers-Sao-Paulo/events/203744692/" target="_blank") Hackaton “Dados e Sensores para medir qualidade de água”
 
 		//
 			#loading(loading-status-message='loading-status-message', ng-class='{active: loads.length}')
