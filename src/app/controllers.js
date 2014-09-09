@@ -6,8 +6,10 @@ module.exports = function(app) {
 		'HomeData',
 		'AvailableGroups',
 		'GroupedFilter',
+		'$state',
+		'$stateParams',
 		'$scope',
-		function(data, AvailableGroups, GroupedFilter, $scope) {
+		function(data, AvailableGroups, GroupedFilter, $state, $stateParams, $scope) {
 
 			$scope.groups = {};
 
@@ -31,6 +33,18 @@ module.exports = function(app) {
 				}
 
 			}
+
+			$scope.$watch('group.name', function(groupName, prevGroup) {
+				if(prevGroup) {
+					//$state.go('home.filter', { group: groupName });
+				}
+			});
+
+			$scope.$watch('group.selection.key', function(selectionKey, prevSelection) {
+				if(prevSelection) {
+					//$state.go('home.filter', { group: $scope.group.name, item: selectionKey });
+				}
+			});
 
 			$scope.selectGroup($scope.groups.abastecimento);
 

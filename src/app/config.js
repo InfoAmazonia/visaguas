@@ -25,6 +25,9 @@ module.exports = function(app) {
 						]
 					}
 				})
+				.state('home.filter', {
+					url: 'dados/:group/:item/'
+				})
 				.state('estado', {
 					url: '/uf/:id/',
 					controller: 'SingleEstadoController',
@@ -47,6 +50,9 @@ module.exports = function(app) {
 							}
 						]
 					}
+				})
+				.state('estado.filter', {
+					url: ':group/:item/'
 				});
 
 			/*
@@ -86,7 +92,11 @@ module.exports = function(app) {
 			$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState) {
 
 				setTimeout(function() {
-					if($(window).scrollTop() > $(window).height()-60 || !(!fromState.name && toState.url == '/')) {
+					if(fromState.name && toState.name == 'home.filter') {
+						$('html,body').animate({
+							scrollTop: $('#data').offset().top - 60
+						}, 500);
+					} else if($(window).scrollTop() > $(window).height()-60 || !(!fromState.name && toState.url == '/')) {
 						$('html,body').animate({
 							scrollTop: $(window).height() - 60
 						}, 500);
