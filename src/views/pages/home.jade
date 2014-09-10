@@ -51,8 +51,8 @@ section#home
 			.map-container.right
 				map#map.map(group="{{group.name}}" user="infoamazonia" table="merge_fiocruz" column="{{group.selection.mapKey}}" where="estado_id IS NOT NULL" color="{{group.color}}" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value")
 				.infowindow(ng-show="map")
-					h4 {{map.municipio}}
-					p {{map.value}}
+					h3 {{map.municipio}}
+					p {{map.value}} {{group.selection.text}}
 
 			a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
 
