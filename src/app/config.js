@@ -87,7 +87,9 @@ module.exports = function(app) {
 
 	app.run([
 		'$rootScope',
-		function($rootScope) {
+		'$location',
+		'$window',
+		function($rootScope, $location, $window) {
 
 			$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState) {
 
@@ -103,6 +105,15 @@ module.exports = function(app) {
 					}
 				}, 200);
 
+			});
+
+			/*
+			 * Analytics
+			 */
+			$rootScope.$on('$stateChangeSuccess', function() {
+				if($window._gaq) {
+					$window._gaq.push(['_trackPageview', $location.path()]);
+				}
 			});
 
 		}

@@ -63,7 +63,6 @@ module.exports = function(app) {
 			$scope.selectGroup({});
 
 			if($state.params.item) {
-				console.log($state.params.item);
 				var group = _.find($scope.groups, function(group) { return group.name == $state.params.group; });
 				group.changeSelection(_.find(group.selections, function(selection) { return selection.key == $state.params.item; }));
 				$scope.selectGroup(group);

@@ -239,8 +239,26 @@ h5 {
 	font-family: "Open Sans Condensed";
 	font-weight: 200;
 	background: #fff url(../img/dots.png);
-	p {
+	p.about-text {
 		margin: 0;
+		a {
+			color: #222;
+			font-weight: 700;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+	}
+	.social {
+		margin: 20px 0 0;
+		> div,
+		> iframe {
+			display: inline-block;
+			height: 20px;
+			margin: 0 10px;
+		}
+		> div > span {
+			vertical-align: middle !important;
+		}
 	}
 }
 
@@ -551,13 +569,20 @@ h5 {
 }
 
 #mastfoot {
-	padding: 60px 0;
+	padding: 60px 0 0;
 	background: #111;
 	color: rgba(255,255,255,0.5);
-	text-align: center;
+	text-align: left;
 	h2 {
 		color: #fff;
 		text-transform: uppercase;
+	}
+	h3 {
+		color: #fff;
+		font-size: 14px;
+		font-family: "Open Sans";
+		font-weight: 600;
+		margin: 0;
 	}
 	p {
 		margin: 0 0 10px;
@@ -565,6 +590,19 @@ h5 {
 			color: #fff;
 			font-weight: 600;
 			text-decoration: none;
+		}
+	}
+	.subfoot {
+		padding: 40px 0;
+		background: #fff url(../img/dots.png);
+		color: #333;
+		.thanks,
+		.source {
+			text-align: center;
+			color: #333;
+			a {
+				color: #333;
+			}
 		}
 	}
 }
