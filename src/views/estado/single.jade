@@ -33,7 +33,7 @@ article#estado
 
 				.clear
 
-				ul.bar-list.municipio-list.inside-map.clearfix
+				ul.bar-list.municipio-list.clearfix
 					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:order | limitTo:10" title="{{municipio.municipio}}")
 						span.rank {{index+1}}
 						bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
