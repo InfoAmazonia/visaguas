@@ -237,7 +237,7 @@ function getCartoCSS(table, color, quantiles) {
 	];
 
 	_.each(quantiles, function(qt, i) {
-		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; }');
+		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; line-width: 0.8; line-opacity: 0.3; line-color: #000; }');
 	});
 
 	return cartocss.join(' ');
