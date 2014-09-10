@@ -92,11 +92,11 @@ module.exports = function(app) {
 			$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState) {
 
 				setTimeout(function() {
-					if(fromState.name && toState.name == 'home.filter') {
+					if(fromState.name && (toState.name == 'home.filter' || toState.name == 'estado.filter')) {
 						$('html,body').animate({
 							scrollTop: $('#data').offset().top - 60
 						}, 500);
-					} else if($(window).scrollTop() > $(window).height()-60 || !(!fromState.name && toState.url == '/')) {
+					} else if(fromState.name && $(window).scrollTop() > $(window).height()-60) {
 						$('html,body').animate({
 							scrollTop: $(window).height() - 60
 						}, 500);

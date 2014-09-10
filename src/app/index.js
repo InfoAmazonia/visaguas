@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('visaguas', ['ui.router']);
+var app = angular.module('visaguas', ['ui.router', 'ngDialog']);
 
 require('./config')(app);
 require('./services')(app);

@@ -2,14 +2,60 @@
 
 module.exports = function(app) {
 
+	app.controller('FiltersController', [
+		'ngDialog',
+		'$scope',
+		function(ngDialog, $scope) {
+
+			$scope.itemDetails = function(group) {
+
+				$scope.detailGroup = group;
+
+				ngDialog.open({
+					template: '/views/details.html',
+					scope: $scope
+				});
+
+			}
+
+		}
+	]);
+
 	app.controller('HomeController', [
 		'HomeData',
 		'AvailableGroups',
 		'GroupedFilter',
+		'$timeout',
 		'$state',
 		'$stateParams',
 		'$scope',
-		function(data, AvailableGroups, GroupedFilter, $state, $stateParams, $scope) {
+		function(data, AvailableGroups, GroupedFilter, $timeout, $state, $stateParams, $scope) {
+
+			$scope.selectGroup = function(group) {
+
+				var useMax = true;
+				var suffix = null;
+
+				if(group.abstraction == '_%') {
+					useMax = false;
+				}
+
+				if(group.abstraction == '_pcmh') {
+					suffix = '/100 mil hab.';
+				}
+
+				$scope.group = _.extend(group, {
+					useMax: useMax,
+					suffix: suffix
+				});
+
+			}
+
+			$scope.$watch('group', function(group, prevGroup) {
+				if(prevGroup.selection) {
+					$state.go('home.filter', { group: group.name, item: group.selection.key });
+				}
+			}, true);
 
 			$scope.groups = {};
 
@@ -19,34 +65,19 @@ module.exports = function(app) {
 
 			});
 
-			$scope.selectGroup = function(group) {
+			// Initialize
+			$scope.selectGroup({});
 
-				$scope.group = group;
-
-				if(group.abstraction !== '_%') {
-					group.useMax = true;
-				} else {
-					group.useMax = false;
-				}
-				if(group.abstraction == '_pcmh') {
-					group.suffix = '/100 mil hab.';
-				}
-
+			if($state.params.item) {
+				console.log($state.params.item);
+				var group = _.find($scope.groups, function(group) { return group.name == $state.params.group; });
+				group.changeSelection(_.find(group.selections, function(selection) { return selection.key == $state.params.item; }));
+				$scope.selectGroup(group);
+			} else {
+				$timeout(function() {
+					$scope.selectGroup($scope.groups.abastecimento);
+				}, 100);
 			}
-
-			$scope.$watch('group.name', function(groupName, prevGroup) {
-				if(prevGroup) {
-					//$state.go('home.filter', { group: groupName });
-				}
-			});
-
-			$scope.$watch('group.selection.key', function(selectionKey, prevSelection) {
-				if(prevSelection) {
-					//$state.go('home.filter', { group: $scope.group.name, item: selectionKey });
-				}
-			});
-
-			$scope.selectGroup($scope.groups.abastecimento);
 
 			$scope.map = false;
 
@@ -82,8 +113,12 @@ module.exports = function(app) {
 		'$scope',
 		function($state, $scope) {
 
-			$scope.accessState = function(id) {
+			$scope.accessUF = function(id) {
 				$state.go('estado', {id: id});
+			}
+
+			$scope.accessUFGroup = function(id, group) {
+				$state.go('estado.filter', {id: id, group: group.name, item: group.selection.key });
 			}
 
 		}
@@ -93,10 +128,39 @@ module.exports = function(app) {
 		'EstadoData',
 		'AvailableGroups',
 		'GroupedFilter',
+		'$timeout',
+		'$state',
+		'$stateParams',
 		'$scope',
-		function(data, AvailableGroups, GroupedFilter, $scope) {
+		function(data, AvailableGroups, GroupedFilter, $timeout, $state, $stateParams, $scope) {
 
 			$scope.estado = data[0].data[0];
+
+			$scope.selectGroup = function(group) {
+
+				var useMax = true;
+				var suffix = null;
+
+				if(group.abstraction == '_%') {
+					useMax = false;
+				}
+
+				if(group.abstraction == '_pcmh') {
+					suffix = '/100 mil hab.';
+				}
+
+				$scope.group = _.extend(group, {
+					useMax: useMax,
+					suffix: suffix
+				});
+
+			}
+
+			$scope.$watch('group', function(group, prevGroup) {
+				if(prevGroup.selection) {
+					$state.go('estado.filter', { id: $scope.estado.id, group: group.name, item: group.selection.key });
+				}
+			}, true);
 
 			$scope.groups = {};
 
@@ -106,22 +170,18 @@ module.exports = function(app) {
 
 			});
 
-			$scope.selectGroup = function(group) {
+			// Initialize
+			$scope.selectGroup({});
 
-				$scope.group = group;
-
-				if(group.abstraction !== '_%') {
-					group.useMax = true;
-				} else {
-					group.useMax = false;
-				}
-				if(group.abstraction == '_pcmh') {
-					group.suffix = '/100 mil hab.';
-				}
-
+			if($state.params.item) {
+				var group = _.find($scope.groups, function(group) { return group.name == $state.params.group; });
+				group.changeSelection(_.find(group.selections, function(selection) { return selection.key == $state.params.item; }));
+				$scope.selectGroup(group);
+			} else {
+				$timeout(function() {
+					$scope.selectGroup($scope.groups.abastecimento);
+				}, 100);
 			}
-
-			$scope.selectGroup($scope.groups.abastecimento);
 
 			$scope.map = false;
 

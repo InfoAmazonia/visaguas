@@ -14,34 +14,35 @@ section#home
 			| dos munícipios são atendidos por rede geral de água. A média nacional é de 
 			span.num 82,7% 
 
-		p.left 26,4% dos domícilios dependem de poços e nascentes. 13,2%, de outras formas, como lagos, açudes e caminhões pipa 
+		.row
+			.left
+				p 26,4% dos domícilios dependem de poços e nascentes. 13,2%, de outras formas, como lagos, açudes e caminhões pipa 
 
-		p.right O pior estado é Rondônia: 61% das famílias obtém água através de alternativas à rede geral.
+				p O pior estado é Rondônia: 61% das famílias obtém água através de alternativas à rede geral.
 
-		p.left A coleta de esgoto também está abaixo da média nacional:  14,6% Amazônia x 38,7% Brasil
+				p A coleta de esgoto também está abaixo da média nacional:  14,6% Amazônia x 38,7% Brasil
 
-		p.right A fossa rudimentar é a principal forma de descarte, presente em 49,2% dos munícipios
+				p A fossa rudimentar é a principal forma de descarte, presente em 49,2% dos munícipios
 
-		p.left Rondônia e Amapá são os estados em pior situação, com 6% de coleta de esgoto
+			.right
+				p Rondônia e Amapá são os estados em pior situação, com 6% de coleta de esgoto
 
-		p.right As doenças causadas pela ingestão de água de má qualidade têm alta incidência na Amazônia
+				p As doenças causadas pela ingestão de água de má qualidade têm alta incidência na Amazônia
 
-		p.left O Acre possui a maior incidência de Hepatite A do país: 69 casos por 100 mil habitantes
+				p O Acre possui a maior incidência de Hepatite A do país: 69 casos por 100 mil habitantes
 
-		p.right O Maranhão é o estado com maior número de internações por amebíase: 26 a cada 100 mil/hab
+				p O Maranhão é o estado com maior número de internações por amebíase: 26 a cada 100 mil/hab
 
-		.clear
+		p.big Explore os dados completos nos mapas e tabelas abaixo
 
-		p Explore os dados completos nos mapas e tabelas abaixo
-
-	#data.data-section
+	#data.data-section(ng-controller="FiltersController")
 		.section-title
 			.container
 				.twelve.columns
-					.title-group-item(ng-repeat="g in groups" ng-class="{active: g == group}")
+					.title-group-item(ng-repeat="g in groups" ng-class="{active: g.name == group.name}")
 						h2(ng-click="selectGroup(g)") {{g.title}}
 				.twelve.columns
-					nav(ng-repeat="g in groups" ng-show="group == g")
+					nav(ng-repeat="g in groups" ng-show="group.name == g.name")
 						ul
 							li(ng-repeat="selection in g.selections")
 								a(href="javascript:void(0);" ng-click="group.changeSelection(selection)" ng-class="{active:group.selection.key == selection.key}") {{selection.name}}
@@ -53,8 +54,11 @@ section#home
 					h4 {{map.municipio}}
 					p {{map.value}}
 
+
+			a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
+
 			ul.bar-list.uf-list.inside-map.clearfix(ng-controller="EstadoController")
-				li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessState(estado.id)")
+				li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessUFGroup(estado.id, group)")
 					span.rank {{index+1}}
 					bar-item(percentage="{{estado.value}}" max="{{group.useMax ? group.max.value : ''}}" data="estado" suffix="{{group.suffix}}")
 						h3 {{data.estado}}

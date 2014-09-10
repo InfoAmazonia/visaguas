@@ -43,30 +43,35 @@ module.exports = function(app) {
 					abstraction: '_%',
 					raw: 'dpp',
 					color: '#00f',
+					measureDesc: 'Medição por porcentagem de domicílios particulares permanentes',
 					selections: [
 						{
 							name: 'Rede geral',
 							key: 'agua_rede_geral',
 							mapKey: 'agua_rede_',
-							text: 'abastecimento de água pela rede geral'
+							text: 'abastecimento de água pela rede geral',
+							desc: 'Quando o domicílio ou o terreno, ou a propriedade onde estava localizado, estava ligado a uma rede geral de distribuição de água.'
 						},
 						{
 							name: 'Poço ou nascente',
 							key: 'agua_poco_nascente',
 							mapKey: 'agua_poco_',
-							text: 'abastecimento de água por poço ou nascente'
+							text: 'abastecimento de água por poço ou nascente',
+							desc: 'Quando o domicílio era servido por água proveniente de poço ou nascente localizado no terreno ou na propriedade onde estava construído.'
 						},
 						{
 							name: 'Chuva armazenada em cisterna',
 							key: 'agua_cisterna',
 							mapKey: 'agua_ciste',
-							text: 'abastecimento de água por chuva armazenada em cisterna'
+							text: 'abastecimento de água por chuva armazenada em cisterna',
+							desc: 'Quando o domicílio era servido por água de chuva armazenada em cisterna, caixa de cimento etc.'
 						},
 						{
 							name: 'Outras formas',
 							key: 'agua_outras',
 							mapKey: 'agua_outra',
-							text: 'abastecimento de água por outras formas'
+							text: 'abastecimento de água por outras formas',
+							desc: 'Quando a forma de abastecimento de água do domicílio era proveniente de poço ou nascente fora da propriedade, carro-pipa, água da chuva armazenada de outra forma, rio, açude, lago ou igarapé ou outra forma de abastecimento de água, diferente das descritas anteriormente.'
 						}
 					]
 				},
@@ -76,42 +81,50 @@ module.exports = function(app) {
 					abstraction: '_%',
 					raw: 'dpp',
 					color: '#f00',
+					measureDesc: 'Medição por porcentagem de domicílios particulares permanentes',
 					selections: [
 						{
 							name: 'Rede geral',
 							key: 'esgoto_rede_geral',
 							mapKey: 'esgoto_red',
-							text: 'acesso a esgoto pela rede geral'
+							text: 'acesso a esgoto pela rede geral',
+							desc: 'Quando a canalização das águas servidas e dos dejetos, proveniente do banheiro ou sanitário, estava ligada a um sistema de coleta que os conduzia a um desaguadouro geral da área, região ou município, mesmo que o sistema não dispusesse de estação de tratamento da matéria esgotada.'
+
 						},
 						{
 							name: 'Fossa séptica',
 							key: 'esgoto_fossa_septica',
 							mapKey: 'esgoto_fos',
-							text: 'acesso a esgoto via fossa séptica'
+							text: 'acesso a esgoto via fossa séptica',
+							desc: 'Quando a canalização do banheiro ou sanitário estava ligada a uma fossa séptica, ou seja, a matéria era esgotada para uma fossa próxima, onde passava por um processo de tratamento ou decantação, sendo, ou não, a parte líquida conduzida em seguida para um desaguadouro geral da área, região ou município.'
 						},
 						{
 							name: 'Fossa rudimentar',
 							key: 'esgoto_fossa_rudimentar',
 							mapKey: 'esgoto_f_1',
-							text: 'acesso a esgoto via fossa rudimentar'
+							text: 'acesso a esgoto via fossa rudimentar',
+							desc: 'Quando o banheiro ou sanitário estava ligado a uma fossa rústica (fossa negra, poço, buraco, etc.).'
 						},
 						{
 							name: 'Vala',
 							key: 'esgoto_vala',
 							mapKey: 'esgoto_val',
-							text: 'acesso a esgoto por vala'
+							text: 'acesso a esgoto por vala',
+							desc: 'Quando o banheiro ou sanitário estava ligado diretamente a uma vala a céu aberto.'
 						},
 						{
 							name: 'Rio, lago ou mar',
 							key: 'esgoto_rio_lago_mar',
 							mapKey: 'esgoto_rio',
-							text: 'acesso a esgoto via rio, lago ou mar'
+							text: 'acesso a esgoto via rio, lago ou mar',
+							desc: 'Quando o banheiro ou sanitário estava ligado diretamente a rio, lago ou mar.'
 						},
 						{
 							name: 'Outro',
 							key: 'esgoto_outros',
 							mapKey: 'esgoto_out',
-							text: 'acesso a esgoto por outras formas'
+							text: 'acesso a esgoto por outras formas',
+							desc: 'Quando o esgotamento dos dejetos, proveniente do banheiro ou sanitário, não se enquadrasse em quaisquer dos tipos descritos anteriormente.'
 						}
 					]
 				},
@@ -121,6 +134,7 @@ module.exports = function(app) {
 					abstraction: '_pcmh',
 					raw: 'populacao',
 					color: '#0f0',
+					measureDesc: 'Medição por incidência por 100 mil habitantes',
 					selections: [
 						{
 							name: 'Amebíase',

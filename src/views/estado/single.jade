@@ -1,5 +1,5 @@
 article#estado
-	.data-section
+	#data.data-section
 		.section-title
 			.container
 				.three.columns
@@ -21,9 +21,9 @@ article#estado
 					p {{map.value}}
 
 			ul.bar-list.municipio-list.inside-map.clearfix
-				li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in group.data | hideEmpty:'value' | orderBy:'value' | limitTo:10")
+				li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:'value' | limitTo:10" title="{{municipio.municipio}}")
 					span.rank {{index+1}}
 					bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
 						h3 {{data.municipio}}
 
-			p.not-found(ng-hide="group.data.length") Nenhum resultado foi encontrado
+			p.not-found(ng-hide="filtered.length") Não foram encontrados índices para este estado
