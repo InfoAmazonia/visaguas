@@ -1,5 +1,5 @@
 article#estado
-	#data.data-section
+	#data.data-section(ng-controller="FiltersController")
 		.section-title
 			.container
 				.three.columns
@@ -19,6 +19,8 @@ article#estado
 				.infowindow(ng-show="map")
 					h4 {{map.municipio}}
 					p {{map.value}}
+
+			a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
 
 			ul.bar-list.municipio-list.inside-map.clearfix
 				li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:'value' | limitTo:10" title="{{municipio.municipio}}")
