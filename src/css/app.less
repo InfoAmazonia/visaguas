@@ -356,6 +356,10 @@ h5 {
 	}
 }
 
+#estado .inside-map .bar-list .bar-item {
+	cursor: default;
+}
+
 .inside-map {
 	margin: 60px 10%;
 	width: 30%;
@@ -364,7 +368,7 @@ h5 {
 	position: relative;
 	z-index: 100;
 	.learn-more {
-		margin: 0 0 20px;
+		margin: 0 0 10px;
 		color: #fff;
 		font-size: 13px;
 		display: block;
@@ -372,6 +376,11 @@ h5 {
 		text-transform: uppercase;
 		font-weight: 600;
 		float: left;
+	}
+	.tip {
+		font-size: 12px;
+		color: rgba(255,255,255,0.8);
+		margin: 0;
 	}
 	.order {
 		float: right;
@@ -387,7 +396,7 @@ h5 {
 	}
 	.bar-list {
 		padding: 0;
-		margin: 0 0 20px;
+		margin: 10px 0 20px;
 		pointer-events: none;
 		color: #fff;
 		.bar-item {
