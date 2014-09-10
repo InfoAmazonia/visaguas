@@ -42,7 +42,7 @@ module.exports = function(app) {
 					name: 'abastecimento',
 					abstraction: '_%',
 					raw: 'dpp',
-					color: '#00f',
+					color: '#0000ff',
 					measureDesc: 'Medição por porcentagem de domicílios particulares permanentes',
 					selections: [
 						{
@@ -80,7 +80,7 @@ module.exports = function(app) {
 					name: 'esgoto',
 					abstraction: '_%',
 					raw: 'dpp',
-					color: '#f00',
+					color: '#ff0000',
 					measureDesc: 'Medição por porcentagem de domicílios particulares permanentes',
 					selections: [
 						{
@@ -133,25 +133,25 @@ module.exports = function(app) {
 					name: 'doencas',
 					abstraction: '_pcmh',
 					raw: 'populacao',
-					color: '#0f0',
+					color: '#ffcc00',
 					measureDesc: 'Medição por internações por 100 mil habitantes',
 					selections: [
 						{
 							name: 'Amebíase',
 							key: 'amebiase',
-							mapKey: 'amebiase',
+							mapKey: 'amebiase_p',
 							text: 'de internações por 100 mil habitantes'
 						},
 						{
 							name: 'Cólera',
 							key: 'colera',
-							mapKey: 'colera',
+							mapKey: 'colera_pcm',
 							text: 'de internações por 100 mil habitantes'
 						},
 						{
 							name: 'Dengue',
 							key: 'dengue',
-							mapKey: 'dengue',
+							mapKey: 'dengue_pcm',
 							text: 'de internações por 100 mil habitantes'
 						},
 						{

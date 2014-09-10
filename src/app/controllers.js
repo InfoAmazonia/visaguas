@@ -51,12 +51,6 @@ module.exports = function(app) {
 
 			}
 
-			$scope.$watch('group', function(group, prevGroup) {
-				if(prevGroup.selection) {
-					$state.go('home.filter', { group: group.name, item: group.selection.key });
-				}
-			}, true);
-
 			$scope.groups = {};
 
 			angular.forEach(AvailableGroups, function(group) {
@@ -76,8 +70,14 @@ module.exports = function(app) {
 			} else {
 				$timeout(function() {
 					$scope.selectGroup($scope.groups.abastecimento);
-				}, 100);
+				}, 50);
 			}
+
+			$scope.$watch('group', function(group, prevGroup) {
+				if(prevGroup.selection) {
+					$state.go('home.filter', { group: group.name, item: group.selection.key });
+				}
+			}, true);
 
 			$scope.map = false;
 
@@ -156,12 +156,6 @@ module.exports = function(app) {
 
 			}
 
-			$scope.$watch('group', function(group, prevGroup) {
-				if(prevGroup.selection) {
-					$state.go('estado.filter', { id: $scope.estado.id, group: group.name, item: group.selection.key });
-				}
-			}, true);
-
 			$scope.groups = {};
 
 			angular.forEach(AvailableGroups, function(group) {
@@ -182,6 +176,12 @@ module.exports = function(app) {
 					$scope.selectGroup($scope.groups.abastecimento);
 				}, 100);
 			}
+
+			$scope.$watch('group', function(group, prevGroup) {
+				if(prevGroup.selection) {
+					$state.go('estado.filter', { id: $scope.estado.id, group: group.name, item: group.selection.key });
+				}
+			}, true);
 
 			$scope.map = false;
 

@@ -132,95 +132,120 @@ module.exports = function(app) {
 						infowindow: true
 					});
 
-					map.addLayer(L.tileLayer(attrs.baselayer));
-
 					var user = attrs.user || 'infoamazonia';
 					var table = attrs.table || 'merge_fiocruz';
 					var column =  attrs.column || 'agua_rede_';
 					var color = attrs.color || 'transparent';
 
-					var sql = new cartodb.SQL({user: user});
+					var initOnce = _.once(function() {
+						init();
+					})
 
-					var select = 'SELECT ' + column + ' as value, * FROM ' + table;
+					attrs.$observe('column', function() {
+						if(attrs.column) {
+							initOnce();
+						}
+					});
 
-					if(attrs.where) {
-						select += ' WHERE ' + attrs.where;
-					}
+					function init() {
 
-					getCartoDBQuantiles(sql, table, column, function(quantiles) {
+						map.addLayer(L.tileLayer(attrs.baselayer));
 
-						sql.getBounds(select).done(function(bounds) {
+						var sql = new cartodb.SQL({user: attrs.user});
 
-							$rootScope.$broadcast('cartodbMapReady', {
-								id: attrs.group,
-								map: map,
-								bounds: bounds
-							});
+						var select = 'SELECT ' + attrs.column + ' as value, * FROM ' + attrs.table;
 
-							cartodb.createLayer(map, {
-								user_name: user,
-								type: 'cartodb',
-								sublayers: [{
-									sql: select,
-									cartocss: getCartoCSS(table, color, quantiles),
-									interactivity: attrs.interactivity || 'value'
-								}],
-								options: {
-									tooltip: true
-								}
-							})
-							.addTo(map)
-							.done(function(layer) {
+						if(attrs.where) {
+							select += ' WHERE ' + attrs.where;
+						}
 
-								fixMap(map, bounds);
+						getCartoDBQuantiles(sql, attrs.table, attrs.column, function(quantiles) {
 
-								var sublayer = layer.getSubLayer(0);
+							sql.getBounds(select).done(function(bounds) {
 
-								var update = _.debounce(function() {
-
-									//update quantiles
-									getCartoDBQuantiles(sql, table, attrs.column, function(qts) {
-
-										quantiles = qts;
-
-										// set new cartocss
-										sublayer.set({'cartocss': getCartoCSS(table, attrs.color, quantiles)});
-
-										// update query
-										var select = 'SELECT ' + attrs.column + ' as value, * FROM ' + table;
-										if(attrs.where) {
-											select += ' WHERE ' + attrs.where;
-										}
-										sublayer.set({'sql': select});
-
-									});
-
-								}, 100);
-
-								attrs.$observe('group', update);
-								attrs.$observe('column', update);
-
-								sublayer.setInteraction(true);
-
-								layer.on('featureOver', function(event, latlng, pos, data, layerIndex) {
-									$rootScope.$broadcast('cartodbFeatureOver', _.extend({id: attrs.group}, data));
+								$rootScope.$broadcast('cartodbMapReady', {
+									id: attrs.group,
+									map: map,
+									bounds: bounds
 								});
 
-								layer.on('featureOut', function(event) {
-									$rootScope.$broadcast('cartodbFeatureOver', {id: attrs.group});
+								cartodb.createLayer(map, {
+									user_name: attrs.user,
+									type: 'cartodb',
+									sublayers: [{
+										sql: select,
+										cartocss: getCartoCSS(attrs.table, attrs.color, quantiles),
+										interactivity: attrs.interactivity || 'value'
+									}],
+									options: {
+										tooltip: true
+									}
+								})
+								.addTo(map)
+								.done(function(layer) {
+
+									fixMap(map, bounds);
+
+									var sublayer = layer.getSubLayer(0);
+
+									var update = _.debounce(function() {
+
+										//update quantiles
+										getCartoDBQuantiles(sql, attrs.table, attrs.column, function(qts) {
+
+											quantiles = qts;
+
+											// set new cartocss
+											sublayer.set({'cartocss': getCartoCSS(table, attrs.color, quantiles)});
+
+											// update query
+											var select = 'SELECT ' + attrs.column + ' as value, * FROM ' + table;
+											if(attrs.where) {
+												select += ' WHERE ' + attrs.where;
+											}
+											sublayer.set({'sql': select});
+
+										});
+
+									}, 100);
+
+									attrs.$observe('group', update);
+									attrs.$observe('column', update);
+									attrs.$observe('color', update);
+
+									sublayer.setInteraction(true);
+
+									layer.on('featureOver', function(event, latlng, pos, data, layerIndex) {
+										$rootScope.$broadcast('cartodbFeatureOver', _.extend({id: attrs.group}, data));
+									});
+
+									layer.on('featureOut', function(event) {
+										$rootScope.$broadcast('cartodbFeatureOver', {id: attrs.group});
+									});
+
 								});
 
 							});
 
 						});
 
-					});
+					}
+
 				}
 			}
 		}
 	]);
 
 };
+
+function hexToRgb(hex) {
+	hex = hex.replace('#', '');
+	var bigint = parseInt(hex, 16);
+	var r = (bigint >> 16) & 255;
+	var g = (bigint >> 8) & 255;
+	var b = bigint & 255;
+	return [r,g,b].join(',');
+}
 
 function fixMap(map, bounds) {
 	setTimeout(function() {
@@ -231,13 +256,15 @@ function fixMap(map, bounds) {
 
 function getCartoCSS(table, color, quantiles) {
 
+	var hex = hexToRgb(color);
+
 	var cartocss = [
-		'#' + table + ' { polygon-fill: ' + color + '; polygon-opacity: 0; }',
-		'#' + table + '[ value <= 0 ] { polygon-opacity: 0; }'
+		'#' + table + ' { polygon-fill: transparent; polygon-opacity: 1; line-width: 0.8; line-opacity: 0.5; line-color: #000; }',
+		'#' + table + '[ value <= 0 ] { polygon-fill: transparent; }'
 	];
 
 	_.each(quantiles, function(qt, i) {
-		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-opacity: 0.' + (i+2) + '; line-width: 0.8; line-opacity: 0.3; line-color: #000; }');
+		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-fill: rgba(' + hex + ', 0.' + (i+2) + ');  }');
 	});
 
 	return cartocss.join(' ');
