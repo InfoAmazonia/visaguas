@@ -4,6 +4,8 @@ article#estado
 			.container
 				.three.columns
 					h1 {{estado.estado}}
+					h2.crumb
+						a(href="javascript:void(0);" ng-click="goHome(group)") Ver todos os estados
 				.nine.columns
 					.title-group-item(ng-repeat="g in groups" ng-class="{active: g == group}")
 						h2(ng-click="selectGroup(g)") {{g.title}}
@@ -20,12 +22,21 @@ article#estado
 					h3 {{map.municipio}}
 					p {{map.value}} {{group.selection.text}}
 
-			a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
+			.inside-map
 
-			ul.bar-list.municipio-list.inside-map.clearfix
-				li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:'value' | limitTo:10" title="{{municipio.municipio}}")
-					span.rank {{index+1}}
-					bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
-						h3 {{data.municipio}}
+				a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais
+
+				span.order
+					| Ordernar
+					a(href="javascript:void(0);" ng-click="changeOrder('value')") &#x25B2;
+					a(href="javascript:void(0);" ng-click="changeOrder('-value')") &#x25BC;
+
+				.clear
+
+				ul.bar-list.municipio-list.inside-map.clearfix
+					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:order | limitTo:10" title="{{municipio.municipio}}")
+						span.rank {{index+1}}
+						bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
+							h3 {{data.municipio}}
 
 			p.not-found(ng-hide="filtered.length") Não foram encontrados índices para este estado

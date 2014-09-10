@@ -54,11 +54,15 @@ section#home
 					h3 {{map.municipio}}
 					p {{map.value}} {{group.selection.text}}
 
-			a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
+			.inside-map
 
-			ul.bar-list.uf-list.inside-map.clearfix(ng-controller="EstadoController")
-				li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessUFGroup(estado.id, group)")
-					span.rank {{index+1}}
-					bar-item(percentage="{{estado.value}}" max="{{group.useMax ? group.max.value : ''}}" data="estado" suffix="{{group.suffix}}")
-						h3 {{data.estado}}
-						p.municipios {{data.municipios}} municipios
+				a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
+
+				.clear
+
+				ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
+					li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessUFGroup(estado.id, group)")
+						span.rank {{index+1}}
+						bar-item(percentage="{{estado.value}}" max="{{group.useMax ? group.max.value : ''}}" data="estado" suffix="{{group.suffix}}")
+							h3 {{data.estado}}
+							p.municipios {{data.municipios}} municipios

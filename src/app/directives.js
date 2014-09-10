@@ -259,7 +259,7 @@ function getCartoCSS(table, color, quantiles) {
 	var hex = hexToRgb(color);
 
 	var cartocss = [
-		'#' + table + ' { polygon-fill: transparent; polygon-opacity: 1; line-width: 0.8; line-opacity: 0.5; line-color: #000; }',
+		'#' + table + ' { polygon-fill: transparent; polygon-opacity: 1; line-width: 1; line-opacity: 0.5; line-color: #000; }',
 		'#' + table + '[ value <= 0 ] { polygon-fill: transparent; }'
 	];
 

@@ -250,8 +250,8 @@ h5 {
 	padding: 40px 0 20px;
 	text-align: center;
 	h1 {
-		font-size: 50px;
-		line-height: 50px;
+		font-size: 45px;
+		line-height: 45px;
 		border-right: 1px solid rgba(255,255,255,0.2);
 		float: none;
 		text-transform: uppercase;
@@ -260,12 +260,30 @@ h5 {
 		height: 125px;
 		padding-right: 20px;
 		margin-bottom: -20px;
+		text-align: left;
 	}
 	h2 {
 		color: #fff;
 		text-transform: uppercase;
 		float: left;
 		margin: 0 40px 0 0;
+		&.crumb {
+			font-size: 12px;
+			line-height: 20px;
+			float: none;
+			text-align: left;
+			margin: -55px 0 -40px;
+			font-family: "Open Sans";
+			position: relative;
+			z-index: 2;
+			a {
+				color: rgba(255,255,255,0.5);
+				text-decoration: none;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
 	}
 	h2 {
 		font-size: 34px;
@@ -288,6 +306,7 @@ h5 {
 			.transition(color .2s ease-in-out);
 			cursor: pointer;
 			float: none;
+			font-size: 30px;
 		}
 		&:hover h2 {
 			color: rgba(255,255,255,0.5);
@@ -325,18 +344,55 @@ h5 {
 	}
 }
 
-.bar-list {
-	&.inside-map {
-		position: relative;
-		z-index: 100;
-		padding: 0;
-		margin: 40px 10%;
-		width: 25%;
-		min-width: 350px;
+#estado {
+	.section-title {
+		text-align: left;
+		.title-group-item {
+			text-align: left;
+		}
+		nav {
+			text-align: left;
+		}
+	}
+}
+
+.inside-map {
+	margin: 60px 10%;
+	width: 25%;
+	min-width: 350px;
+	color: #fff;
+	position: relative;
+	z-index: 100;
+	.learn-more {
+		margin: 0 0 20px;
 		color: #fff;
+		font-size: 13px;
+		display: block;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 600;
+		float: left;
+	}
+	.order {
+		float: right;
+		font-size: 12px;
+		color: rgba(255,255,255,0.5);
+		text-transform: uppercase;
+		padding-right: 5px;
+		a {
+			text-decoration: none;
+			margin-left: 5px;
+			color: #fff;
+		}
+	}
+	.bar-list {
+		padding: 0;
+		margin: 0 0 20px;
 		pointer-events: none;
+		color: #fff;
 		.bar-item {
 			width: 100%;
+			.box-sizing(border-box);
 			height: 45px;
 			display: block;
 			pointer-events: auto;
@@ -367,6 +423,9 @@ h5 {
 			}
 		}
 	}
+}
+
+.bar-list {
 	.bar-item {
 		position: relative;
 		padding: 0 0 0 40px;
@@ -469,17 +528,6 @@ h5 {
 				background: -ms-linear-gradient(left,  rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
 				background: linear-gradient(to right,  rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 100%); /* W3C */
 				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
-			}
-			.learn-more {
-				position: relative;
-				z-index: 100;
-				margin: 20px 10% -20px;
-				color: #fff;
-				font-size: 13px;
-				display: block;
-				text-decoration: none;
-				text-transform: uppercase;
-				font-weight: 600;
 			}
 			p.not-found {
 				position: relative;

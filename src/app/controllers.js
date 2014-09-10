@@ -136,6 +136,12 @@ module.exports = function(app) {
 
 			$scope.estado = data[0].data[0];
 
+			$scope.order = 'value';
+
+			$scope.changeOrder = function(order) {
+				$scope.order = order;
+			};
+
 			$scope.selectGroup = function(group) {
 
 				var useMax = true;
@@ -176,6 +182,10 @@ module.exports = function(app) {
 					$scope.selectGroup($scope.groups.abastecimento);
 				}, 100);
 			}
+
+			$scope.goHome = function(group) {
+				$state.go('home.filter', { group: group.name, item: group.selection.key });
+			};
 
 			$scope.$watch('group', function(group, prevGroup) {
 				if(prevGroup.selection) {
