@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var fs = require('fs'),
 	async = require('async'),
 	csv = require('csv'),
