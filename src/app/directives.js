@@ -63,7 +63,6 @@ module.exports = function(app) {
 				template:	'<div class="data-rep"></div>' +
 							'<div class="data-info">' +
 								'<p class="percentage"></p>' +
-								'<ng-transclude></ng-transclude>' +
 							'</div>',
 				link: function(scope, element, attrs, controller, transclude) {
 

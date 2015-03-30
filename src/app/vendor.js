@@ -1,4 +1,4 @@
 window._ = require('underscore');
-require('angular');
+window.angular = require('angular');
 require('angular-ui-router');
-require('angular-dialog/js/ngDialog');
+require('ng-dialog');

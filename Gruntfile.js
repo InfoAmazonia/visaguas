@@ -3,6 +3,9 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		browserify: {
 			js: {
+				options: {
+					transform: ['browserify-shim']
+				},
 				files: {
 					'dist/vendor.js': 'src/app/vendor.js',
 					'dist/app.js': 'src/app/index.js'
