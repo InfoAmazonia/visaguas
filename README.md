@@ -29,3 +29,9 @@ $ npm start
 ```
 
 Para visualizar, acesse [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+Para definir uma porta diferente da padrão, crie um arquivo `.env` na raiz do módulo com a porta:
+
+```
+PORT=8888
+```
