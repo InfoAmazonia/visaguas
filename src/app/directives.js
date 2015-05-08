@@ -136,6 +136,8 @@ module.exports = function(app) {
 					var column =  attrs.column || 'agua_rede_';
 					var color = attrs.color || 'transparent';
 
+					var city = attrs.city || '';
+
 					var initOnce = _.once(function() {
 						init();
 					})
@@ -158,9 +160,17 @@ module.exports = function(app) {
 							select += ' WHERE ' + attrs.where;
 						}
 
+						var boundSelect = '';
+
+						if(attrs.city) {
+							boundSelect = select + " AND co_ibge3 = '" + attrs.city + "'";
+						} else {
+							boundSelect = select;
+						}
+
 						getCartoDBQuantiles(sql, attrs.table, attrs.column, function(quantiles) {
 
-							sql.getBounds(select).done(function(bounds) {
+							sql.getBounds(boundSelect).done(function(bounds) {
 
 								$rootScope.$broadcast('cartodbMapReady', {
 									id: attrs.group,
@@ -168,12 +178,14 @@ module.exports = function(app) {
 									bounds: bounds
 								});
 
+								var cartocss = getCartoCSS(attrs.table, attrs.color, quantiles, attrs.city);
+
 								cartodb.createLayer(map, {
 									user_name: attrs.user,
 									type: 'cartodb',
 									sublayers: [{
 										sql: select,
-										cartocss: getCartoCSS(attrs.table, attrs.color, quantiles),
+										cartocss: cartocss,
 										interactivity: attrs.interactivity || 'value'
 									}],
 									options: {
@@ -195,7 +207,7 @@ module.exports = function(app) {
 											quantiles = qts;
 
 											// set new cartocss
-											sublayer.set({'cartocss': getCartoCSS(table, attrs.color, quantiles)});
+											sublayer.set({'cartocss': getCartoCSS(table, attrs.color, quantiles, attrs.city)});
 
 											// update query
 											var select = 'SELECT ' + attrs.column + ' as value, * FROM ' + table;
@@ -253,7 +265,7 @@ function fixMap(map, bounds) {
 	}, 100);
 }
 
-function getCartoCSS(table, color, quantiles) {
+function getCartoCSS(table, color, quantiles, city) {
 
 	var hex = hexToRgb(color);
 
@@ -265,6 +277,10 @@ function getCartoCSS(table, color, quantiles) {
 	_.each(quantiles, function(qt, i) {
 		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-fill: rgba(' + hex + ', 0.' + (i+2) + ');  }');
 	});
+
+	if(city) {
+		cartocss.push('#' + table + '[ co_ibge3 = "' + city + '" ] { line-width: 2; line-color: #fff; line-opacity: 1; }');
+	}
 
 	return cartocss.join(' ');
 

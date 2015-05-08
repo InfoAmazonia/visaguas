@@ -58,7 +58,7 @@ module.exports = function(app) {
 					url: 'dados/:group/:item/'
 				})
 				.state('estado.cidade', {
-					url: 'cidade/:cidadeId/'
+					url: 'cidade/:cityId/'
 				})
 				.state('estado.cidade.filter', {
 					url: 'dados/:group/:item/'

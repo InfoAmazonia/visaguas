@@ -8,6 +8,8 @@ module.exports = function(app) {
 		function($scope, $location) {
 			$scope.iframe = window.self !== window.top;
 			$scope.theme = $location.search().theme;
+			$scope.lock = $location.search().lock;
+			$scope.hideTitle = $location.search().hide_title;
 
 			console.log($scope.theme);
 		}
@@ -195,13 +197,25 @@ module.exports = function(app) {
 				}, 100);
 			}
 
+			$scope.limitCities = 10;
+
 			$scope.goHome = function(group) {
 				$state.go('home.filter', { group: group.name, item: group.selection.key });
 			};
 
 			$scope.$watch('group', function(group, prevGroup) {
+				var state = 'estado.filter';
+				if($state.current.name.indexOf('cidade') !== -1) {
+					state = 'estado.cidade.filter';
+				}
 				if(prevGroup.selection) {
-					$state.go('estado.filter', { id: $scope.estado.id, group: group.name, item: group.selection.key });
+					$state.go(state, { id: $scope.estado.id, group: group.name, item: group.selection.key });
+				}
+				if($state.params.cityId) {
+					$scope.city = _.find($scope.group.data, function(city) {
+						return city.id == $state.params.cityId;
+					});
+					$scope.limitCities = 5;
 				}
 			}, true);
 
