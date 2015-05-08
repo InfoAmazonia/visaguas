@@ -55,7 +55,13 @@ module.exports = function(app) {
 					}
 				})
 				.state('estado.filter', {
-					url: ':group/:item/'
+					url: 'dados/:group/:item/'
+				})
+				.state('estado.cidade', {
+					url: 'cidade/:cidadeId/'
+				})
+				.state('estado.cidade.filter', {
+					url: 'dados/:group/:item/'
 				});
 
 			/*

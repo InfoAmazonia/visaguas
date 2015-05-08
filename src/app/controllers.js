@@ -2,6 +2,17 @@
 
 module.exports = function(app) {
 
+	app.controller('MainCtrl', [
+		'$scope',
+		'$location',
+		function($scope, $location) {
+			$scope.iframe = window.self !== window.top;
+			$scope.theme = $location.search().theme;
+
+			console.log($scope.theme);
+		}
+	]);
+
 	app.controller('FiltersController', [
 		'ngDialog',
 		'$scope',
@@ -30,6 +41,8 @@ module.exports = function(app) {
 		'$stateParams',
 		'$scope',
 		function(data, AvailableGroups, GroupedFilter, $timeout, $state, $stateParams, $scope) {
+
+			$scope.iframe = window.self !== window.top;
 
 			$scope.selectGroup = function(group) {
 

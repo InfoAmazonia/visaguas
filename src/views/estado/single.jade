@@ -2,15 +2,17 @@ article#estado
 	#data.data-section(ng-controller="FiltersController")
 		.section-title
 			.container
-				.three.columns
+				//- .three.columns
+				.twelve.columns
 					h1 {{estado.estado}}
-					h2.crumb
-						a(href="javascript:void(0);" ng-click="goHome(group)") Ver todos os estados
-				.nine.columns
 					.title-group-item(ng-repeat="g in groups" ng-class="{active: g == group}")
 						h2(ng-click="selectGroup(g)") {{g.title}}
-					.clear
-					nav(ng-repeat="g in groups" ng-show="group == g")
+				.clear
+			nav(ng-repeat="g in groups" ng-show="group == g")
+				.container
+					.twelve.columns
+						h2.crumb
+							a(href="javascript:void(0);" ng-click="goHome(group)") Ver todos os estados
 						ul
 							li(ng-repeat="selection in g.selections")
 								a(href="javascript:void(0);" ng-click="group.changeSelection(selection)" ng-class="{active:group.selection.key == selection.key}") {{selection.name}}
@@ -23,20 +25,22 @@ article#estado
 					p {{map.value}} {{group.selection.text}}
 
 			.inside-map
+				.container
+					.twelve.columns
+						.inside-map-content
+							a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais
 
-				a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais
+							span.order
+								| Ordernar
+								a(href="javascript:void(0);" ng-click="changeOrder('value')") &#x25B2;
+								a(href="javascript:void(0);" ng-click="changeOrder('-value')") &#x25BC;
 
-				span.order
-					| Ordernar
-					a(href="javascript:void(0);" ng-click="changeOrder('value')") &#x25B2;
-					a(href="javascript:void(0);" ng-click="changeOrder('-value')") &#x25BC;
+							.clear
 
-				.clear
-
-				ul.bar-list.municipio-list.clearfix
-					li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:order | limitTo:10" title="{{municipio.municipio}}")
-						span.rank {{index+1}}
-						bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
-							h3 {{data.municipio}}
+							ul.bar-list.municipio-list.clearfix
+								li.bar-item.municipio-item.clearfix(ng-repeat="(index, municipio) in (filtered = (group.data | hideEmpty:'value')) | orderBy:order | limitTo:10" title="{{municipio.municipio}}")
+									span.rank {{index+1}}
+									bar-item(percentage="{{municipio.value}}" max="{{group.useMax ? group.max.value : ''}}" data="municipio" suffix="{{group.suffix}}")
+										h3 {{data.municipio}}
 
 			p.not-found(ng-hide="filtered.length") Não foram encontrados índices para este estado

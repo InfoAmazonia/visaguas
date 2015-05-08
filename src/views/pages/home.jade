@@ -1,6 +1,6 @@
 section#home
 
-	#intro.row
+	#intro.row(ng-hide="iframe")
 		p.big
 			| A Amazônia detém a maior quantidade de água doce do Brasil, 
 			span.num 73% 
@@ -11,7 +11,7 @@ section#home
 		p.big
 			| Na Amazônia Legal, 
 			span.num 60% 
-			| dos munícipios são atendidos por rede geral de água. A média nacional é de 
+			| das residências são atendidas por rede geral de água. A média nacional é de 
 			span.num 82,7% 
 
 		.row
@@ -41,8 +41,9 @@ section#home
 				.twelve.columns
 					.title-group-item(ng-repeat="g in groups" ng-class="{active: g.name == group.name}")
 						h2(ng-click="selectGroup(g)") {{g.title}}
-				.twelve.columns
-					nav(ng-repeat="g in groups" ng-show="group.name == g.name")
+			nav(ng-repeat="g in groups" ng-show="group.name == g.name")
+				.container
+					.twelve.columns
 						ul
 							li(ng-repeat="selection in g.selections")
 								a(href="javascript:void(0);" ng-click="group.changeSelection(selection)" ng-class="{active:group.selection.key == selection.key}") {{selection.name}}
@@ -53,18 +54,19 @@ section#home
 				.infowindow(ng-show="map")
 					h3 {{map.municipio}}
 					p {{map.value}} {{group.selection.text}}
-
 			.inside-map
+				.container
+					.twelve.columns
+						.inside-map-content
+							a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
 
-				a.learn-more(href="javascript:void(0)" ng-click="itemDetails(group)") Saiba mais sobre este filtro
+							.clear
 
-				.clear
+							ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
+								li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessUFGroup(estado.id, group)")
+									span.rank {{index+1}}
+									bar-item(percentage="{{estado.value}}" max="{{group.useMax ? group.max.value : ''}}" data="estado" suffix="{{group.suffix}}")
+										h3 {{data.estado}}
+										p.municipios {{data.municipios}} municipios
 
-				ul.bar-list.uf-list.clearfix(ng-controller="EstadoController")
-					li.bar-item.uf-item.clearfix(ng-repeat="(index, estado) in group.data | orderBy:'estado'" ng-click="accessUFGroup(estado.id, group)")
-						span.rank {{index+1}}
-						bar-item(percentage="{{estado.value}}" max="{{group.useMax ? group.max.value : ''}}" data="estado" suffix="{{group.suffix}}")
-							h3 {{data.estado}}
-							p.municipios {{data.municipios}} municipios
-
-				p.tip Clique nos estados para ver ranking dos municípios
+							p.tip Clique nos estados para ver ranking dos municípios

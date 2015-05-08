@@ -1,7 +1,7 @@
 doctype html
 html(lang='pt-BR')
 	include includes/head
-	body
+	body(ng-controller="MainCtrl" ng-class="{iframe: iframe, theme_{{theme}}: theme}")
 
 		#fb-root
 		script.
@@ -13,8 +13,8 @@ html(lang='pt-BR')
 			fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 
-		header#masthead
-			video(src="http://infoamazonia.org/visaguas/video_01.mp4" autoplay loop muted)
+		header#masthead(ng-hide="iframe")
+			video(src="http://infoamazonia.org/visaguas/video_01.mp4" ng-attr-autoplay="!iframe" loop muted)
 			p.video-credits
 				a(href="https://www.flickr.com/photos/cifor/5963328548" target="_blank") Vídeo: Daniel Cooney/CIFOR
 			
@@ -29,49 +29,50 @@ html(lang='pt-BR')
 
 		.clear
 
-		#about
-			p.about-text
-				| VISAGUAS é um aplicativo da plataforma 
-				a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia 
-				| dedicada a concentrar dados sobre o acesso ao saneamento, a qualidade d´água e as enfermidades de veiculação hídrica na região amazônica.
+		div(ng-hide="iframe")
+			#about
+				p.about-text
+					| VISAGUAS é um aplicativo da plataforma 
+					a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia 
+					| dedicada a concentrar dados sobre o acesso ao saneamento, a qualidade d´água e as enfermidades de veiculação hídrica na região amazônica.
 
-			.social
+				.social
 
-				.fb-like(data-href="http://visaguas.infoamazonia.org/" data-colorscheme="dark" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true")
+					.fb-like(data-href="http://visaguas.infoamazonia.org/" data-colorscheme="dark" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true")
 
-				a(href="https://twitter.com/share" data-url="http://visaguas.infoamazonia.org/" class="twitter-share-button" data-lang="pt-BR") Tuitar
-				script.
-					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+					a(href="https://twitter.com/share" data-url="http://visaguas.infoamazonia.org/" class="twitter-share-button" data-lang="pt-BR") Tuitar
+					script.
+						!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
-		footer#mastfoot
-			.container
-				.row
-					.six.columns
-						h2 Equipe
-						p
-							a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia
-						p Visualização: Miguel Peixe
-						p Análise e base de dados: Vitor George
-						p Texto: Gustavo Faleiros
-					.six.columns
-						h2 Dados
-						.three.columns.alpha
-							h3 Acesso à rede geral de saneamento
-							p Censo 2010 - IBGE
-							h3 Acesso a esgotamento sanitário
-							p Censo 2010 - IBGE
-						.three.columns.omega
-							h3 Enfermidades
-							p Dados do DataSUS (AIH e SINAM) conforme organização do projeto Água Brasil da Fiocruz
-							h3 Outras fontes utilizadas
-							p Agência Nacional de Água (ANA), Instituto Trata Brasil
-			.subfoot
+			footer#mastfoot
 				.container
-					.twelve.columns
-						p.thanks
-							| Agradecimento a todos os participantes da 
-							a(href="http://www.meetup.com/Hacks-Hackers-Sao-Paulo/events/203744692/" target="_blank") Hackaton “Dados e Sensores para medir qualidade de água”
-						p.source
-							a(href="https://github.com/oeco/visaguas" target="_blank") Acesse o código no GitHub
+					.row
+						.six.columns
+							h2 Equipe
+							p
+								a(href="http://infoamazonia.org/" target="_blank") InfoAmazonia
+							p Visualização: Miguel Peixe
+							p Análise e base de dados: Vitor George
+							p Texto: Gustavo Faleiros
+						.six.columns
+							h2 Dados
+							.three.columns.alpha
+								h3 Acesso à rede geral de saneamento
+								p Censo 2010 - IBGE
+								h3 Acesso a esgotamento sanitário
+								p Censo 2010 - IBGE
+							.three.columns.omega
+								h3 Enfermidades
+								p Dados do DataSUS (AIH e SINAM) conforme organização do projeto Água Brasil da Fiocruz
+								h3 Outras fontes utilizadas
+								p Agência Nacional de Água (ANA), Instituto Trata Brasil
+				.subfoot
+					.container
+						.twelve.columns
+							p.thanks
+								| Agradecimento a todos os participantes da 
+								a(href="http://www.meetup.com/Hacks-Hackers-Sao-Paulo/events/203744692/" target="_blank") Hackaton “Dados e Sensores para medir qualidade de água”
+							p.source
+								a(href="https://github.com/oeco/visaguas" target="_blank") Acesse o código no GitHub
 
 		include includes/foot
