@@ -10,8 +10,6 @@ module.exports = function(app) {
 			$scope.theme = $location.search().theme;
 			$scope.lock = $location.search().lock;
 			$scope.hideTitle = $location.search().hide_title;
-
-			console.log($scope.theme);
 		}
 	]);
 
