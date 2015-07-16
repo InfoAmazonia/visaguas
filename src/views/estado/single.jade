@@ -21,7 +21,7 @@ article#estado
 
 		.section-content.with-map
 			.map-container.right
-				map#map.map(group="{{group.name}}" user="infoamazonia" table="merge_fiocruz" column="{{group.selection.mapKey}}" where="estado_id = {{estado.id}}" color="{{group.color}}" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value" city="{{city.id}}")
+				map#map.map(group="{{group.name}}" user="infoamazonia" table="merge_fiocruz_amz" column="{{group.selection.mapKey}}" where="estado_id = {{estado.id}}" color="{{group.color}}" baselayer="https://{s}.tiles.mapbox.com/v3/infoamazonia.j55mnl2i/{z}/{x}/{y}.png" interactivity="municipio,value" city="{{city.id}}")
 				.infowindow(ng-show="map")
 					h3 {{map.municipio}}
 					p {{map.value}} {{group.selection.text}}

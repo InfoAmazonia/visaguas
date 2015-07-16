@@ -20,7 +20,7 @@ module.exports = function(app) {
 					var parse = function(text) {
 						if(attrs.prefix) text = attrs.prefix + text;
 						if(attrs.suffix) text = text + attrs.suffix;
-						return text;						
+						return text;
 					}
 
 					var start = numberInterval({
@@ -73,7 +73,7 @@ module.exports = function(app) {
 					var topOffset;
 					var windowHeight;
 
-	
+
 					var suffix = attrs.suffix || '%';
 
 					var updateSizes = function() {
@@ -132,7 +132,7 @@ module.exports = function(app) {
 					});
 
 					var user = attrs.user || 'infoamazonia';
-					var table = attrs.table || 'merge_fiocruz';
+					var table = attrs.table || 'merge_fiocruz_amz';
 					var column =  attrs.column || 'agua_rede_';
 					var color = attrs.color || 'transparent';
 
@@ -275,7 +275,7 @@ function getCartoCSS(table, color, quantiles, city) {
 	];
 
 	_.each(quantiles, function(qt, i) {
-		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-fill: rgba(' + hex + ', 0.' + (i+2) + ');  }');
+		cartocss.push('#' + table + '[ value >= ' + qt + ' ] { polygon-fill: rgba(' + hex + ', ' + ((i+1)/10) + ');  }');
 	});
 
 	if(city) {
@@ -287,8 +287,9 @@ function getCartoCSS(table, color, quantiles, city) {
 }
 
 function getCartoDBQuantiles(sql, table, column, cb) {
-	sql.execute('SELECT CDB_QuantileBins(array_agg(cast(' + table + '.' + column + ' as numeric)), 7) FROM ' + table + ' WHERE ' + column + ' IS NOT null').done(function(data) {
-		cb(data.rows[0].cdb_quantilebins);
+	sql.execute('SELECT CDB_HeadsTailsBins(array_agg(cast(' + column + ' as numeric)), 10) FROM ' + table).done(function(data) {
+		var bins = data.rows[0].cdb_headstailsbins;
+		cb(bins);
 	});
 }
 
