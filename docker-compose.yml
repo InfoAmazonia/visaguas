@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app:
+    build: .
+    image: aparabolica/visaguas
+    ports:
+      - 8000:8000
+    environment:
+      PORT: 8000

@@ -1,7 +1,10 @@
-require('dotenv').load();
+var fs = require('fs');
 
-var fs = require('fs'),
-	async = require('async'),
+if(fs.existsSync('./.env')) {
+	require('dotenv').load();
+}
+
+var async = require('async'),
 	csv = require('csv'),
 	express = require('express'),
 	bodyParser = require('body-parser'),

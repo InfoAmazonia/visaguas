@@ -1,0 +1,6 @@
+dist
+project
+data/source
+node_modules
+npm-debug.log
+.env
