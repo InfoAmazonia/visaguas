@@ -2,8 +2,18 @@ version: '2'
 services:
   app:
     build: .
-    image: aparabolica/visaguas
-    ports:
-      - 8000:8000
+    image: infoamazonia/visaguas
+    #ports:
+    #  - 3001:8000
     environment:
-      PORT: 8000
+      PORT: 3001 
+    restart: always 
+    networks: 
+      - default 
+      - weblan 
+ 
+networks: 
+ weblan: 
+   external:  
+    name: ispconfig_weblan 
+
