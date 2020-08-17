@@ -140,43 +140,43 @@ module.exports = function(app) {
 							name: 'Amebíase',
 							key: 'amebiase',
 							mapKey: 'amebiase_p',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Cólera',
 							key: 'colera',
 							mapKey: 'colera_pcm',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Dengue',
 							key: 'dengue',
 							mapKey: 'dengue_pcm',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Esquistossomose',
 							key: 'esquistossomose',
 							mapKey: 'esquistoss',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Filariose',
 							key: 'filariose',
 							mapKey: 'filariose',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Leptospirose',
 							key: 'leptospirose',
 							mapKey: 'leptospiro',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						},
 						{
 							name: 'Febre tifóide',
 							key: 'tifoide',
 							mapKey: 'tifoide',
-							text: 'de internações por 100 mil habitantes'
+							text: 'internações por 100 mil habitantes'
 						}
 					]
 				}
