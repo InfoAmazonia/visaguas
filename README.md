@@ -12,7 +12,7 @@ Uma análise sobre a água na Amazônia Legal
 Clone o repositório
 
 ```
-$ git clone https://github.com/oeco/visaguas.git
+$ git clone https://github.com/InfoAmazonia/visaguas.git
 ```
 
 Instale a aplicação digitando:
