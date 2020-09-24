@@ -57,6 +57,19 @@ module.exports = function(grunt) {
 						dest: 'dist',
 						expand: true
 					}
+					//, FOR GITHUB PAGES DEPLOY
+					// {
+					// 	cwd: 'dist/views/',
+					// 	src: ['index.html'],
+					// 	dest: 'dist',
+					// 	expand: true
+					// },
+					// {
+					// 	cwd: 'src/views/',
+					// 	src: ['404.html'],
+					// 	dest: 'dist',
+					// 	expand: true
+					// }
 				]
 			}
 		},
