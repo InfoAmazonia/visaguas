@@ -1,11 +1,22 @@
 {
+  "homepage": "https://1visag.infoamazonia.org/",
   "name": "visaguas",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "postinstall": "mkdir -p dist && ./node_modules/grunt-cli/bin/grunt build",
-    "start": "node index.js"
+    "start": "node index.js",
+    "clean": "gh-pages-clean",
+    "predeploy": "NODE_ENV=production npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InfoAmazonia/visaguas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/InfoAmazonia/visaguas/issues"
   },
   "author": "",
   "license": "ISC",
@@ -43,5 +54,8 @@
     "transform": [
       "browserify-shim"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }
