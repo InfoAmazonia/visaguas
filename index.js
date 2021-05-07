@@ -20,7 +20,7 @@ app.use('/', express.static(__dirname + '/dist'));
 require('./api')(app);
 
 app.get('/*', function(req, res) {
-	res.sendfile('dist/views/index.html');
+	res.sendFile('dist/views/index.html', { root: __dirname });
 });
 
 function serve() {

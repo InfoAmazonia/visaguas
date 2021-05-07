@@ -4,8 +4,8 @@ Uma análise sobre a água na Amazônia Legal
 
 ## Pré-requisitos
 
- - npm 1.4.x
- - node 0.10.x
+ - npm 6.4.1
+ - node 8.16.0
 
 ## Instalação
 
