@@ -6,7 +6,6 @@ module.exports = function(app) {
 		'$http',
 		'$q',
 		function($http, $q) {
-
 			var load = function(query, cb) {
 
 				query = query || {};
@@ -15,7 +14,7 @@ module.exports = function(app) {
 					method: 'GET',
 					url: '/api',
 					params: query
-				}).success(function(data) {
+				}).then(function(data) {
 					cb(data);
 				});
 
