@@ -45,7 +45,7 @@
     "grunt-contrib-uglify": "5.0.1",
     "grunt-contrib-watch": "1.1.0",
     "napa": "0.4.1",
-    "underscore": "1.7.0"
+    "underscore": "1.13.0"
   },
   "browser": {
     "angular": "./node_modules/angular/angular.js"
