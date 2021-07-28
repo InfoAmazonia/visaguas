@@ -9,7 +9,8 @@
     "start": "node index.js",
     "clean": "gh-pages-clean",
     "predeploy": "NODE_ENV=production npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "install" : "echo"
   },
   "repository": {
     "type": "git",
