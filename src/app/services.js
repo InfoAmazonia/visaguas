@@ -14,7 +14,7 @@ module.exports = function(app) {
 					method: 'GET',
 					url: '/api',
 					params: query
-				}).then(function(data) {
+				}).then(function({data}) {
 					cb(data);
 				});
 
