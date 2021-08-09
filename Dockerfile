@@ -21,11 +21,10 @@ ENV HOME=/home/node
 # Copy files
 WORKDIR $HOME/app
 COPY . $HOME/app/
-
+RUN npm install
 # Fix permissions and install app
 RUN chown -R $APP_USER:$APP_USER $HOME/app 
-RUN npm install
-COPY entrypoint.sh /entrypoint.sh
+COPY docker/production/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 

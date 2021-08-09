@@ -7,6 +7,7 @@ services:
       - 3000:3000
     volumes:
       - ./:/home/node/app
+      - ./docker/local/entrypoint.sh:/entrypoint.sh
     environment:
       PORT: 3000 
     restart: always 
