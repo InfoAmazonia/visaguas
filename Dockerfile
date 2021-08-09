@@ -23,9 +23,8 @@ WORKDIR $HOME/app
 COPY . $HOME/app/
 
 # Fix permissions and install app
-RUN chown -R $APP_USER:$APP_USER $HOME/app && \
-  gosu $APP_USER:$APP_USER npm install
-
+RUN chown -R $APP_USER:$APP_USER $HOME/app 
+RUN npm install
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
