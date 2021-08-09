@@ -4,17 +4,12 @@ services:
     build: .
     image: infoamazonia/visaguas
     ports:
-     - 3000:3000
+      - 3000:3000
     volumes:
-     - ./:/home/node/app
+      - ./:/home/node/app
     environment:
       PORT: 3000 
     restart: always 
     networks: 
       - default 
-      - weblan
-networks: 
- weblan: 
-   external:  
-    name: ispconfig_weblan 
 
