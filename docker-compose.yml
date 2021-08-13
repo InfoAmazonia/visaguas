@@ -13,6 +13,22 @@ services:
     networks: 
       - default 
       - weblan
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile  
+    working_dir:  /home/node/app
+    volumes:
+      - ./:/home/node/app
+      - ./origin.pem:/origin.pem
+      - ./origin.key:/origin.key
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - "app"
+    networks:
+      - weblan
 networks: 
  weblan: 
    external:  
