@@ -190,8 +190,8 @@ module.exports = function(app) {
 									}],
 									options: {
 										tooltip: true
-									}
-								})
+									},
+								},{https: true})
 								.addTo(map)
 								.done(function(layer) {
 
